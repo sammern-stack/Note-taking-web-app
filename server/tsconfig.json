@@ -8,7 +8,7 @@
     "module": "nodenext",
     "target": "esnext",
     "types": [],
-    "lib": ["esnext"],
+    "lib": ["esnext", "DOM"],
 
     // Other Outputs
     "sourceMap": true,
