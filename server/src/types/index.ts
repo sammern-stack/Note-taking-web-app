@@ -43,3 +43,12 @@ export interface INoteParams {
 
 export type TCreateNoteBody = TNewNote;
 export type TUpdateNoteBody = Partial<TNewNote>;
+
+// JWT payloads
+export interface IAccessTokenPayload {
+  userId: string;
+}
+
+export interface IRefreshTokenPayload {
+  userId: string;
+}
