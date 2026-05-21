@@ -7,3 +7,5 @@ export interface INote {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type TNewNote = Omit<INote, "createdAt" | "updatedAt">;
