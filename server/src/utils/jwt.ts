@@ -11,7 +11,7 @@ export const generateAccessToken = (payload: IAccessTokenPayload): string => {
   } as jwt.SignOptions);
 };
 
-export const refreshAccessToken = (payload: IRefreshTokenPayload): string => {
+export const generateRefreshToken = (payload: IRefreshTokenPayload): string => {
   return jwt.sign(payload, config.refreshTokenSecret, {
     expiresIn: config.refreshTokenExpiry,
   } as jwt.SignOptions);
