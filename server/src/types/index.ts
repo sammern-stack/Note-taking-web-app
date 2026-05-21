@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { Types } from "mongoose";
 
 // Models
 
@@ -26,6 +26,14 @@ export interface IUser {
 
 export interface IUserDocument extends Omit<IUser, "_id">, Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+// RefreshToken model
+export interface IRefreshToken {
+  token: string,
+  user: Types.ObjectId;
+  expiresAt: Date;
+  createdAt: Date;
 }
 
 // Controller Requests types
