@@ -18,9 +18,7 @@ const noteSchema = new Schema<INote>(
       default: false,
     },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 const Note = model<INote>("note", noteSchema);
