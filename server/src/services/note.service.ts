@@ -17,7 +17,7 @@ export const getNoteById = async (id: string) => {
 };
 
 export const createNote = async (data: TNewNote) => {
-  const exist = await Note.find({ title: data.title });
+  const exist = await Note.findOne({ title: data.title });
   if (exist) throw new AppError("A note with the same title exists", 409);
 
   return Note.create(data);
