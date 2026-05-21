@@ -1,4 +1,4 @@
-import type { Types } from "mongoose";
+import type { HydratedDocument, Types } from "mongoose";
 
 // Models
 
@@ -24,9 +24,9 @@ export interface IUser {
   updatedAt: Date;
 }
 
-export interface IUserDocument extends Omit<IUser, "_id">, Document {
+export type IUserDocument = HydratedDocument<IUser> & {
   comparePassword(candidatePassword: string): Promise<boolean>;
-}
+};
 
 // RefreshToken model
 export interface IRefreshToken {
@@ -70,4 +70,16 @@ export interface LoginData {
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;
+}
+
+// auth controllers
+export interface RegisterBody {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginBody {
+  email: string;
+  password: string;
 }
