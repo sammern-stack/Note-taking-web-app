@@ -17,5 +17,5 @@ export interface INoteParams {
   id: string;
 }
 
-export type ICreateNoteBody = TNewNote;
-export type IUpdateNoteBody = Partial<TNewNote>;
+export type TCreateNoteBody = TNewNote;
+export type TUpdateNoteBody = Partial<TNewNote>;
