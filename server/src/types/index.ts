@@ -14,7 +14,7 @@ export type TNewNote = Omit<INote, "createdAt" | "updatedAt">;
 
 // Controller Requests types
 export interface INoteParams {
-  id: string;
+  id?: string;
 }
 
 export type TCreateNoteBody = TNewNote;
