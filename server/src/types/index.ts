@@ -30,7 +30,7 @@ export interface IUserDocument extends Omit<IUser, "_id">, Document {
 
 // RefreshToken model
 export interface IRefreshToken {
-  token: string,
+  token: string;
   user: Types.ObjectId;
   expiresAt: Date;
   createdAt: Date;
@@ -44,6 +44,8 @@ export interface INoteParams {
 export type TCreateNoteBody = TNewNote;
 export type TUpdateNoteBody = Partial<TNewNote>;
 
+// Auth
+
 // JWT payloads
 export interface IAccessTokenPayload {
   userId: string;
@@ -51,4 +53,21 @@ export interface IAccessTokenPayload {
 
 export interface IRefreshTokenPayload {
   userId: string;
+}
+
+// auth services
+export interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
 }
