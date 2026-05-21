@@ -3,13 +3,15 @@ import type { Response } from "express";
 export const sendSuccess = (
   res: Response,
   data: unknown,
-  statusCode: 200,
+  statusCode = 200,
   meta?: Record<string, unknown>,
+  msg?: string,
 ): void => {
   res.status(statusCode).json({
     success: true,
     data,
     ...(meta && { meta }),
+    ...(msg && { msg }),
   });
 };
 
