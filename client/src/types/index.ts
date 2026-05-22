@@ -12,14 +12,14 @@ export interface IUser {
   password: string;
 }
 
-export interface apiResponse<T> {
+export interface ApiResponse<T> {
   success: boolean;
   data: T;
   meta?: object;
   msg?: string;
 }
 
-export interface authResponseData {
+export interface AuthResponseData {
   user: IUser;
   accessToken: string;
 }
