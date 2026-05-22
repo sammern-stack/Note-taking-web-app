@@ -1,4 +1,5 @@
-import api, { apiCall } from "./axios.js";
+import { fetchApi } from "./util";
+import api from "./axios";
 
 import type {
   NoteResult,
@@ -6,18 +7,18 @@ import type {
   TCreateNoteBody,
   TUpdateNoteBody,
   VoidResult,
-} from "../types/index.js";
+} from "../types";
 
-export const getNotes = (): NotesResult => apiCall(() => api.get("/notes"));
+export const getNotes = (): NotesResult => fetchApi(() => api.get("/notes"));
 
 export const getNoteById = (id: string): NoteResult =>
-  apiCall(() => api.get(`/notes/${id}`));
+  fetchApi(() => api.get(`/notes/${id}`));
 
 export const createNote = (body: TCreateNoteBody): NoteResult =>
-  apiCall(() => api.post("/notes", body));
+  fetchApi(() => api.post("/notes", body));
 
 export const updateNote = (id: string, body: TUpdateNoteBody): NoteResult =>
-  apiCall(() => api.put(`/notes/${id}`, body));
+  fetchApi(() => api.put(`/notes/${id}`, body));
 
 export const deleteNote = (id: string): VoidResult =>
-  apiCall(() => api.delete(`/notes/${id}`));
+  fetchApi(() => api.delete(`/notes/${id}`));

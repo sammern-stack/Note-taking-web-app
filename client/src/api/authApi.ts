@@ -1,4 +1,5 @@
-import api, { apiCall } from "./axios";
+import api from "./axios";
+import { fetchApi } from "./util";
 
 import type {
   ApiResult,
@@ -10,19 +11,19 @@ import type {
 } from "../types";
 
 export const loginUser = (credentials: LoginCredentials): AuthResult =>
-  apiCall(() => api.post("/auth/login", credentials));
+  fetchApi(() => api.post("/auth/login", credentials));
 
 export const registerUser = (userData: RegisterData): AuthResult =>
-  apiCall(() => api.post("/auth/register", userData));
+  fetchApi(() => api.post("/auth/register", userData));
 
 export const refreshJWT = (): AuthResult =>
-  apiCall(() => api.post("/auth/refresh"));
+  fetchApi(() => api.post("/auth/refresh"));
 
 export const logoutUser = (): VoidResult =>
-  apiCall(() => api.post("/auth/logout"));
+  fetchApi(() => api.post("/auth/logout"));
 
 export const logoutAllUser = (): VoidResult =>
-  apiCall(() => api.post("/auth/logout-all"));
+  fetchApi(() => api.post("/auth/logout-all"));
 
 export const getMe = (): Promise<ApiResult<IUser>> =>
-  apiCall(() => api.get("/auth/me"));
+  fetchApi(() => api.get("/auth/me"));
