@@ -15,8 +15,8 @@ import type {
   IUser,
   AuthStatus,
   AuthResult,
-  AuthAction,
   AuthResponseData,
+  TAsyncVoidFn,
 } from "../types";
 
 interface AuthState {
@@ -26,9 +26,9 @@ interface AuthState {
   // Actions
   login: (credentials: LoginCredentials) => AuthResult;
   register: (data: RegisterData) => AuthResult;
-  logout: AuthAction;
-  logoutAll: AuthAction;
-  initializeAuth: AuthAction;
+  logout: TAsyncVoidFn;
+  logoutAll: TAsyncVoidFn;
+  initializeAuth: TAsyncVoidFn;
 
   // Helper
   authUser: (data: AuthResponseData) => void;

@@ -1,9 +1,10 @@
 export * from "./axios";
 export * from "./auth";
-export * from "./notes"
+export * from "./notes";
 
 // Utilities
 export type TVoidFn = () => void;
+export type TAsyncVoidFn = () => Promise<void>;
 
 // Models
 export interface INote {
@@ -22,4 +23,3 @@ export interface IUser {
   email: string;
   password: string;
 }
-
