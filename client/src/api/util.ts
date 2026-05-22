@@ -3,15 +3,12 @@ import type { ApiResponse, ApiResult } from "../types";
 
 type TFetchApiFn<T> = () => Promise<{ data: ApiResponse<T> }>;
 
-const unwrap = async <T>(fn: TFetchApiFn<T>): Promise<T> => {
-  const { data } = await fn();
-  return data.data;
-};
-
-export const fetchApi = async <T>(fn: TFetchApiFn<T>): Promise<ApiResult<T>> => {
+export const fetchApi = async <T>(
+  fn: TFetchApiFn<T>,
+): Promise<ApiResult<T>> => {
   try {
-    const data = await unwrap(fn);
-    return { ok: true, data };
+    const { data } = await fn();
+    return { ok: true, data: data.data };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
     return {
