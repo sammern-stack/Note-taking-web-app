@@ -89,11 +89,16 @@ api.interceptors.response.use(
   },
 );
 
-export const apiCall = async <T>(
-  fn: () => Promise<T>,
-): Promise<ApiResult<T>> => {
+type ApiCallFn<T> = () => Promise<{ data: ApiResponse<T> }>;
+
+const unwrap = async <T>(fn: ApiCallFn<T>): Promise<T> => {
+  const { data } = await fn();
+  return data.data;
+};
+
+export const apiCall = async <T>(fn: ApiCallFn<T>): Promise<ApiResult<T>> => {
   try {
-    const data = await fn();
+    const data = await unwrap(fn);
     return { ok: true, data };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

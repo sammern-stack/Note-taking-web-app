@@ -1,3 +1,4 @@
+// Models
 export interface INote {
   title: string;
   tags: string[];
@@ -12,6 +13,7 @@ export interface IUser {
   password: string;
 }
 
+// Api data
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -19,11 +21,21 @@ export interface ApiResponse<T> {
   msg?: string;
 }
 
-export type ApiResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; error: string };
+export type ApiResult<T> = { ok: true; data: T } | { ok: false; error: string };
 
 export interface AuthResponseData {
   user: IUser;
   accessToken: string;
+}
+
+// Auth data
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
 }
