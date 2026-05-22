@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuthStore } from "../../stores/useAuthStore";
+import { useAuthStore } from "../../stores";
 
 export const ProtectedRoute = () => {
   const { user, status } = useAuthStore();
@@ -7,9 +7,7 @@ export const ProtectedRoute = () => {
 
   if (status === "idle" || status === "loading") return null;
 
-  return user ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
-  );
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+
+  return <Outlet />;
 };
