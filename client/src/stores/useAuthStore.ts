@@ -16,6 +16,7 @@ import type {
   AuthStatus,
   AuthResult,
   AuthAction,
+  AuthResponseData,
 } from "../types";
 
 interface AuthState {
@@ -28,61 +29,32 @@ interface AuthState {
   logout: AuthAction;
   logoutAll: AuthAction;
   initializeAuth: AuthAction;
+
+  // Helper
+  authUser: (data: AuthResponseData) => void;
+  unauthUser: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   status: "idle",
 
   // Call it once at app mount
   initializeAuth: async () => {
     set({ status: "loading" });
-    try {
-      const res = await refreshJWT();
-
-      if (!res.ok) {
-        setAccessToken(null);
-        set({ user: null, status: "unauthenticated" });
-        return;
-      }
-
-      const { data } = res;
-
-      setAccessToken(data.accessToken);
-      set({ user: data.user, status: "authenticated" });
-    } catch {
-      setAccessToken(null);
-      set({ user: null, status: "unauthenticated" });
-    }
+    const res = await refreshJWT();
+    res.ok ? get().authUser(res.data) : get().unauthUser();
   },
 
   login: async (credentials) => {
     const res = await loginUser(credentials);
-
-    if (!res.ok) {
-      setAccessToken(null);
-      set({ user: null, status: "unauthenticated" });
-      return res;
-    }
-
-    const { data } = res;
-    setAccessToken(data.accessToken);
-    set({ user: data.user, status: "authenticated" });
+    if (res.ok) get().authUser(res.data);
     return res;
   },
 
-  register: async (registerData) => {
-    const res = await registerUser(registerData);
-
-    if (!res.ok) {
-      setAccessToken(null);
-      set({ user: null, status: "unauthenticated" });
-      return res;
-    }
-
-    const { data } = res;
-    setAccessToken(data.accessToken);
-    set({ user: data.user, status: "authenticated" });
+  register: async (data) => {
+    const res = await registerUser(data);
+    if (res.ok) get().authUser(res.data);
     return res;
   },
 
@@ -90,8 +62,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await logoutUser();
     } finally {
-      setAccessToken(null);
-      set({ user: null, status: "unauthenticated" });
+      get().unauthUser();
     }
   },
 
@@ -99,9 +70,18 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await logoutAllUser();
     } finally {
-      setAccessToken(null);
-      set({ user: null, status: "unauthenticated" });
+      get().unauthUser();
     }
+  },
+
+  authUser: (data) => {
+    setAccessToken(data.accessToken);
+    set({ user: data.user, status: "authenticated" });
+  },
+
+  unauthUser: () => {
+    setAccessToken(null);
+    set({ user: null, status: "unauthenticated" });
   },
 }));
 
