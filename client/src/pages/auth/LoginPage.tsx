@@ -7,7 +7,7 @@ import {
 import { useLogin } from "../../hooks/auth/useLogin";
 import "./Auth.scss";
 
-export const LoginPage = () => {
+const LoginPage = () => {
   const formik = useLogin();
 
   return (
@@ -44,3 +44,5 @@ export const LoginPage = () => {
     </div>
   );
 };
+
+export default LoginPage;

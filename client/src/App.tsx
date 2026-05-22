@@ -2,10 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { useInitApp } from "./hooks";
 
-import { LoginPage } from "./pages/auth/LoginPage";
-import HomePage from "./pages/home/HomePage";
+import { HomePage, SettingsPage, LoginPage } from "./pages";
 
-import { ProtectedRoute } from "./components/shared/ProtectedRoute";
+import { ProtectedRoute } from "./components/shared";
 
 function App() {
   const { isAppLoading } = useInitApp();
@@ -18,6 +17,7 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
