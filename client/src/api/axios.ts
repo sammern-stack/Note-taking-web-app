@@ -51,13 +51,12 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
-    // Reject early if its 401 or api retried once already
-    if (error.response?.status !== 401 || originalRequest._retry)
-      return Promise.reject(error);
+    const isRefreshEndpoint = originalRequest.url?.includes("/auth/refresh");
+    const is401 = error.response?.status !== 401;
+    const hasRetried = originalRequest._retry;
 
-    // When calling refresh endpoint reject otherwise will cause infinite refresh loop
-    if (originalRequest.url?.includes("/auth/refresh"))
-      return Promise.reject(error);
+    const shouldReject = isRefreshEndpoint || !is401 || hasRetried;
+    if (shouldReject) return Promise.reject(error);
 
     originalRequest._retry = true;
 
