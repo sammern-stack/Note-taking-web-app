@@ -44,6 +44,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+// After every response silently issues new token when previous expires
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
