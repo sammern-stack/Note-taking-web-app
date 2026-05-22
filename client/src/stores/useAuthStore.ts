@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { IUser } from "../types";
+import type { ApiResult, AuthResponseData, IUser } from "../types";
 import {
   loginRequest,
   registerRequest,
@@ -17,8 +17,10 @@ interface AuthState {
   status: AuthStatus;
 
   // Actions
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
+  login: (
+    credentials: LoginCredentials,
+  ) => Promise<ApiResult<AuthResponseData>>;
+  register: (data: RegisterData) => Promise<ApiResult<AuthResponseData>>;
   logout: () => Promise<void>;
   logoutAll: () => Promise<void>;
   initializeAuth: () => Promise<void>;
@@ -56,13 +58,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (!res.ok) {
       setAccessToken(null);
       set({ user: null, status: "unauthenticated" });
-      return;
+      return res;
     }
 
     const { data } = res;
-
     setAccessToken(data.accessToken);
     set({ user: data.user, status: "authenticated" });
+    return res;
   },
 
   register: async (registerData) => {
@@ -71,13 +73,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (!res.ok) {
       setAccessToken(null);
       set({ user: null, status: "unauthenticated" });
-      return;
+      return res;
     }
 
     const { data } = res;
-
     setAccessToken(data.accessToken);
     set({ user: data.user, status: "authenticated" });
+    return res;
   },
 
   logout: async () => {
