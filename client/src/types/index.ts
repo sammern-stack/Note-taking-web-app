@@ -1,9 +1,12 @@
 // Models
 export interface INote {
+  _id: string;
   title: string;
   tags: string[];
   content: string;
   isArchived: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IUser {
@@ -39,3 +42,8 @@ export interface RegisterData {
   email: string;
   password: string;
 }
+
+// Mirror your backend types exactly
+export type TNewNote = Omit<INote, "_id" | "createdAt" | "updatedAt">;
+export type TCreateNoteBody = TNewNote;
+export type TUpdateNoteBody = Partial<TNewNote>;
