@@ -1,29 +1,33 @@
 import { create } from "zustand";
-import type { ApiResult, AuthResponseData, IUser } from "../types";
-import {
-  loginRequest,
-  registerRequest,
-  refreshRequest,
-  logoutRequest,
-  logoutAllRequest,
-} from "../api/authApi";
 import { setAccessToken } from "../api/axios";
-import type { LoginCredentials, RegisterData } from "../api/authApi";
 
-type AuthStatus = "idle" | "loading" | "authenticated" | "unauthenticated";
+import {
+  loginUser,
+  registerUser,
+  refreshJWT,
+  logoutUser,
+  logoutAllUser,
+} from "../api/authApi";
+
+import type {
+  LoginCredentials,
+  RegisterData,
+  IUser,
+  AuthStatus,
+  AuthResult,
+  AuthAction,
+} from "../types";
 
 interface AuthState {
   user: IUser | null;
   status: AuthStatus;
 
   // Actions
-  login: (
-    credentials: LoginCredentials,
-  ) => Promise<ApiResult<AuthResponseData>>;
-  register: (data: RegisterData) => Promise<ApiResult<AuthResponseData>>;
-  logout: () => Promise<void>;
-  logoutAll: () => Promise<void>;
-  initializeAuth: () => Promise<void>;
+  login: (credentials: LoginCredentials) => AuthResult;
+  register: (data: RegisterData) => AuthResult;
+  logout: AuthAction;
+  logoutAll: AuthAction;
+  initializeAuth: AuthAction;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -34,7 +38,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   initializeAuth: async () => {
     set({ status: "loading" });
     try {
-      const res = await refreshRequest();
+      const res = await refreshJWT();
 
       if (!res.ok) {
         setAccessToken(null);
@@ -53,7 +57,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   login: async (credentials) => {
-    const res = await loginRequest(credentials);
+    const res = await loginUser(credentials);
 
     if (!res.ok) {
       setAccessToken(null);
@@ -68,7 +72,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   register: async (registerData) => {
-    const res = await registerRequest(registerData);
+    const res = await registerUser(registerData);
 
     if (!res.ok) {
       setAccessToken(null);
@@ -84,7 +88,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     try {
-      await logoutRequest();
+      await logoutUser();
     } finally {
       setAccessToken(null);
       set({ user: null, status: "unauthenticated" });
@@ -93,7 +97,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logoutAll: async () => {
     try {
-      await logoutAllRequest();
+      await logoutAllUser();
     } finally {
       setAccessToken(null);
       set({ user: null, status: "unauthenticated" });

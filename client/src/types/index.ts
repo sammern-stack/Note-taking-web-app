@@ -16,17 +16,7 @@ export interface IUser {
   password: string;
 }
 
-// Api data
-export interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  meta?: object;
-  msg?: string;
-}
-
-export type ApiResult<T> = { ok: true; data: T } | { ok: false; error: string };
-
-export interface AuthResponseData {
-  user: IUser;
-  accessToken: string;
-}
+// Axios
+export * from "./axios";
+export * from "./auth";
+export * from "./notes"

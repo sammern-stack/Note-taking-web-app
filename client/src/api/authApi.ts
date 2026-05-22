@@ -1,34 +1,28 @@
 import api, { apiCall } from "./axios";
-import type { ApiResult, AuthResponseData, IUser } from "../types";
 
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
+import type {
+  ApiResult,
+  AuthResult,
+  IUser,
+  LoginCredentials,
+  RegisterData,
+  VoidResult,
+} from "../types";
 
-export interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-type AuthResult = Promise<ApiResult<AuthResponseData>>;
-type VoidResult = Promise<ApiResult<void>>;
-
-export const loginRequest = (credentials: LoginCredentials): AuthResult =>
+export const loginUser = (credentials: LoginCredentials): AuthResult =>
   apiCall(() => api.post("/auth/login", credentials));
 
-export const registerRequest = (userData: RegisterData): AuthResult =>
+export const registerUser = (userData: RegisterData): AuthResult =>
   apiCall(() => api.post("/auth/register", userData));
 
-export const refreshRequest = (): AuthResult =>
+export const refreshJWT = (): AuthResult =>
   apiCall(() => api.post("/auth/refresh"));
 
-export const logoutRequest = (): VoidResult =>
+export const logoutUser = (): VoidResult =>
   apiCall(() => api.post("/auth/logout"));
 
-export const logoutAllRequest = (): VoidResult =>
+export const logoutAllUser = (): VoidResult =>
   apiCall(() => api.post("/auth/logout-all"));
 
-export const getMeRequest = (): Promise<ApiResult<IUser>> =>
+export const getMe = (): Promise<ApiResult<IUser>> =>
   apiCall(() => api.get("/auth/me"));

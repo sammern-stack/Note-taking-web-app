@@ -1,24 +1,32 @@
 import axios from "axios";
+
 import type { AxiosError, InternalAxiosRequestConfig } from "axios";
-import type { ApiResponse, AuthResponseData, ApiResult } from "../types";
+import type {
+  ApiResponse,
+  AuthResponseData,
+  ApiResult,
+  TAccessToken,
+  TQueueFn,
+  TApiCallFn,
+} from "../types";
 
-let accessToken: string | null = null;
+let accessToken: TAccessToken = null;
 
-export const setAccessToken = (token: string | null): void => {
+export const setAccessToken = (token: TAccessToken): void => {
   accessToken = token;
 };
 
-export const getAccessToken = (): string | null => accessToken;
+export const getAccessToken = (): TAccessToken => accessToken;
 
 let isRefreshing = false;
-let refreshSubscribers: ((token: string) => void)[] = [];
+let refreshSubscribers: TQueueFn[] = [];
 
 const onRefresh = (token: string): void => {
   refreshSubscribers.forEach((callback) => callback(token));
   refreshSubscribers = [];
 };
 
-const addRefreshSubscriber = (callback: (token: string) => void): void => {
+const addRefreshSubscriber = (callback: TQueueFn): void => {
   refreshSubscribers.push(callback);
 };
 
@@ -89,14 +97,12 @@ api.interceptors.response.use(
   },
 );
 
-type ApiCallFn<T> = () => Promise<{ data: ApiResponse<T> }>;
-
-const unwrap = async <T>(fn: ApiCallFn<T>): Promise<T> => {
+const unwrap = async <T>(fn: TApiCallFn<T>): Promise<T> => {
   const { data } = await fn();
   return data.data;
 };
 
-export const apiCall = async <T>(fn: ApiCallFn<T>): Promise<ApiResult<T>> => {
+export const apiCall = async <T>(fn: TApiCallFn<T>): Promise<ApiResult<T>> => {
   try {
     const data = await unwrap(fn);
     return { ok: true, data };
