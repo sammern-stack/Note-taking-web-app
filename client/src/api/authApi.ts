@@ -1,12 +1,12 @@
 import api, { apiCall } from "./axios";
 import type { ApiResult, AuthResponseData, IUser } from "../types";
 
-interface LoginCredentials {
+export interface LoginCredentials {
   email: string;
   password: string;
 }
 
-interface RegisterData {
+export interface RegisterData {
   username: string;
   email: string;
   password: string;
