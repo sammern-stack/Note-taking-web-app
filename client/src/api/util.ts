@@ -1,14 +1,14 @@
 import type { AxiosError } from "axios";
 import type { ApiResponse, ApiResult } from "../types";
 
-type TApiCallFn<T> = () => Promise<{ data: ApiResponse<T> }>;
+type TFetchApiFn<T> = () => Promise<{ data: ApiResponse<T> }>;
 
-const unwrap = async <T>(fn: TApiCallFn<T>): Promise<T> => {
+const unwrap = async <T>(fn: TFetchApiFn<T>): Promise<T> => {
   const { data } = await fn();
   return data.data;
 };
 
-export const fetchApi = async <T>(fn: TApiCallFn<T>): Promise<ApiResult<T>> => {
+export const fetchApi = async <T>(fn: TFetchApiFn<T>): Promise<ApiResult<T>> => {
   try {
     const data = await unwrap(fn);
     return { ok: true, data };
