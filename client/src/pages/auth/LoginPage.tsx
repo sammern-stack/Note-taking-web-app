@@ -31,6 +31,7 @@ const LoginPage = () => {
             type="email"
             label="Email address"
           />
+
           <FormField
             fieldName="password"
             errorName="password"
