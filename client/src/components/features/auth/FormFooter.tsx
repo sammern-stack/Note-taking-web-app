@@ -9,12 +9,12 @@ interface FormFooterProps {
 
 export const FormFooter = ({ label, link, nav }: FormFooterProps) => {
   const navigate = useNavigate();
-  const handleOnClick = () => navigate(nav);
+  const handleOnClick = () => navigate(link);
 
   return (
     <div className="auth__footer">
       <p>
-        {label} <span onClick={handleOnClick}>{link}</span>
+        {label} <span onClick={handleOnClick}>{nav}</span>
       </p>
     </div>
   );
