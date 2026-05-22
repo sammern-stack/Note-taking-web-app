@@ -13,7 +13,6 @@ import type {
   LoginCredentials,
   RegisterData,
   IUser,
-  AuthStatus,
   AuthResult,
   AuthResponseData,
   TAsyncVoidFn,
@@ -21,7 +20,7 @@ import type {
 
 interface AuthState {
   user: IUser | null;
-  status: AuthStatus;
+  status: "idle" | "loading" | "authenticated" | "unauthenticated";
 
   // Actions
   login: (credentials: LoginCredentials) => AuthResult;

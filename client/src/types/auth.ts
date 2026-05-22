@@ -17,7 +17,5 @@ export interface AuthResponseData {
   accessToken: string;
 }
 
-
-export type AuthStatus = "idle" | "loading" | "authenticated" | "unauthenticated";
 export type AuthResult = Promise<ApiResult<AuthResponseData>>;
 export type VoidResult = Promise<ApiResult<void>>;
