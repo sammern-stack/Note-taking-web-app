@@ -1,3 +1,10 @@
+export * from "./axios";
+export * from "./auth";
+export * from "./notes"
+
+// Utilities
+export type TVoidFn = () => void;
+
 // Models
 export interface INote {
   _id: string;
@@ -16,7 +23,3 @@ export interface IUser {
   password: string;
 }
 
-// Axios
-export * from "./axios";
-export * from "./auth";
-export * from "./notes"
