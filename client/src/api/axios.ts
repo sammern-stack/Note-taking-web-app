@@ -7,7 +7,6 @@ import type {
   ApiResult,
   TAccessToken,
   TQueueFn,
-  TApiCallFn,
 } from "../types";
 
 let accessToken: TAccessToken = null;
@@ -96,6 +95,8 @@ api.interceptors.response.use(
     }
   },
 );
+
+type TApiCallFn<T> = () => Promise<{ data: ApiResponse<T> }>;
 
 const unwrap = async <T>(fn: TApiCallFn<T>): Promise<T> => {
   const { data } = await fn();
