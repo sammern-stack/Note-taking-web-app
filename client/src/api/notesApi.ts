@@ -1,10 +1,9 @@
 import api, { apiCall } from "./axios.js";
-import type {
-  ApiResult,
-  INote,
-  TCreateNoteBody,
-  TUpdateNoteBody,
-} from "../types/index.js";
+import type { ApiResult, INote } from "../types/index.js";
+
+type TNewNote = Omit<INote, "_id" | "createdAt" | "updatedAt">;
+type TCreateNoteBody = TNewNote;
+type TUpdateNoteBody = Partial<TNewNote>;
 
 type NoteResult = Promise<ApiResult<INote>>;
 type NotesResult = Promise<ApiResult<INote[]>>;

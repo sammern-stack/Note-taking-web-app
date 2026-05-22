@@ -1,11 +1,16 @@
 import api, { apiCall } from "./axios";
-import type {
-  LoginCredentials,
-  RegisterData,
-  ApiResult,
-  AuthResponseData,
-  IUser,
-} from "../types";
+import type { ApiResult, AuthResponseData, IUser } from "../types";
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+}
 
 type AuthResult = Promise<ApiResult<AuthResponseData>>;
 type VoidResult = Promise<ApiResult<void>>;

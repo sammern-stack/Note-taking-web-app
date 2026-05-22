@@ -30,20 +30,3 @@ export interface AuthResponseData {
   user: IUser;
   accessToken: string;
 }
-
-// Auth data
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-// Mirror your backend types exactly
-export type TNewNote = Omit<INote, "_id" | "createdAt" | "updatedAt">;
-export type TCreateNoteBody = TNewNote;
-export type TUpdateNoteBody = Partial<TNewNote>;
