@@ -1,5 +1,6 @@
 import { Formik, Form, type FormikHelpers } from "formik";
 import { ObjectSchema } from "yup";
+import { Button } from "../../shared";
 import "./styles.scss";
 
 type FormikWrapperProps<T extends object> = {
@@ -20,23 +21,16 @@ export const AuthForm = <T extends object>({
   submitLabel,
   submittingLabel,
   children,
-}: FormProps<T>) => {
-  const { initialValues, validationSchema, onSubmit } = formik;
+}: FormProps<T>) => (
+  <Formik {...formik}>
+    {({ isSubmitting }) => (
+      <Form className="auth__form">
+        {children}
 
-  return (
-    <Formik {...{ initialValues, validationSchema, onSubmit }}>
-      {({ isSubmitting }) => (
-        <Form className="auth__form">
-          {children}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="auth__form-submit"
-          >
-            {isSubmitting ? submittingLabel : submitLabel}
-          </button>
-        </Form>
-      )}
-    </Formik>
-  );
-};
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? submittingLabel : submitLabel}
+        </Button>
+      </Form>
+    )}
+  </Formik>
+);
