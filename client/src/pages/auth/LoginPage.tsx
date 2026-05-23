@@ -1,6 +1,5 @@
 import { useLogin } from "../../hooks/auth/useLogin";
 import {
-  // FormHeader,
   FormFooter,
   AuthForm,
   FormField,
@@ -16,10 +15,6 @@ const LoginPage = () => {
       <div className="auth__content">
         <SiteLogo wrapper="auth__icon-wrapper" />
 
-        {/* <FormHeader
-          title="Welcome to Note"
-          subtitle="Please log in to continue"
-        /> */}
         <div className="auth__header">
           <Title size="h1">Welcome to Note</Title>
           <Title size="h2">Please log in to continue</Title>
