@@ -26,15 +26,15 @@ const LoginPage = () => {
           submittingLabel="Logging in..."
         >
           <FormField
-            fieldName="email"
-            errorName="email"
+            name="email"
+            error="email"
             type="email"
             label="Email address"
           />
 
           <FormField
-            fieldName="password"
-            errorName="password"
+            name="password"
+            error="password"
             type="password"
             label="Password"
           />

@@ -24,7 +24,7 @@ export const AuthForm = <T extends object>({
 }: FormProps<T>) => (
   <Formik {...formik}>
     {({ isSubmitting }) => (
-      <Form className="auth__form">
+      <Form className="form">
         {children}
 
         <Button type="submit" disabled={isSubmitting}>
