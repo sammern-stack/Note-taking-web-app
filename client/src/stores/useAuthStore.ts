@@ -10,21 +10,20 @@ import {
 } from "../api/authApi";
 
 import type {
-  LoginCredentials,
-  RegisterData,
   IUser,
   AuthResult,
   AuthResponseData,
   TAsyncVoidFn,
 } from "../types";
+import type { TLogin, TRegister } from "../api/authApi";
 
 interface AuthState {
   user: IUser | null;
   status: "idle" | "loading" | "authenticated" | "unauthenticated";
 
   // Actions
-  login: (credentials: LoginCredentials) => AuthResult;
-  register: (data: RegisterData) => AuthResult;
+  login: (info: TLogin) => AuthResult;
+  register: (info: TRegister) => AuthResult;
   logout: TAsyncVoidFn;
   logoutAll: TAsyncVoidFn;
   initializeAuth: TAsyncVoidFn;
@@ -45,14 +44,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     res.ok ? get().authUser(res.data) : get().unauthUser();
   },
 
-  login: async (credentials) => {
-    const res = await loginUser(credentials);
+  login: async (info) => {
+    const res = await loginUser(info);
     if (res.ok) get().authUser(res.data);
     return res;
   },
 
-  register: async (data) => {
-    const res = await registerUser(data);
+  register: async (info) => {
+    const res = await registerUser(info);
     if (res.ok) get().authUser(res.data);
     return res;
   },

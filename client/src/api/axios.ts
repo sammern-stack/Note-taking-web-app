@@ -2,8 +2,8 @@ import axios from "axios";
 
 import type { AxiosError, InternalAxiosRequestConfig } from "axios";
 import type {
-  ApiResponse,
   AuthResponseData,
+  IApiSuccess,
   TAccessToken,
   TQueueFn,
 } from "../types";
@@ -73,7 +73,7 @@ api.interceptors.response.use(
 
     try {
       const { data } =
-        await api.post<ApiResponse<AuthResponseData>>("/auth/refresh");
+        await api.post<IApiSuccess<AuthResponseData>>("/auth/refresh");
 
       const newToken = data.data.accessToken;
       setAccessToken(newToken);

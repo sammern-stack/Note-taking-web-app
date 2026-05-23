@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuthStore } from "../../stores/useAuthStore";
-import type { LoginCredentials } from "../../api/authApi";
+import type { TLogin } from "../../api/authApi";
 import type { FormikHelpers } from "formik";
 
 export const useLogin = () => {
@@ -25,8 +25,8 @@ export const useLogin = () => {
   });
 
   const onSubmit = async (
-    values: LoginCredentials,
-    { setFieldError }: FormikHelpers<LoginCredentials>,
+    values: TLogin,
+    { setFieldError }: FormikHelpers<TLogin>,
   ) => {
     const res = await login(values);
 

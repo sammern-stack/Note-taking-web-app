@@ -1,19 +1,15 @@
 import api from "./axios";
 import { fetchApi } from "./util";
 
-import type {
-  ApiResult,
-  AuthResult,
-  IUser,
-  LoginCredentials,
-  RegisterData,
-  VoidResult,
-} from "../types";
+import type { AuthResult, IUser, VoidResult, TApiPromise } from "../types";
 
-export const loginUser = (credentials: LoginCredentials): AuthResult =>
+export type TLogin = Pick<IUser, "email" | "password">;
+export type TRegister = Omit<IUser, "_id">;
+
+export const loginUser = (credentials: TLogin): AuthResult =>
   fetchApi(() => api.post("/auth/login", credentials));
 
-export const registerUser = (userData: RegisterData): AuthResult =>
+export const registerUser = (userData: TRegister): AuthResult =>
   fetchApi(() => api.post("/auth/register", userData));
 
 export const refreshJWT = (): AuthResult =>
@@ -25,5 +21,5 @@ export const logoutUser = (): VoidResult =>
 export const logoutAllUser = (): VoidResult =>
   fetchApi(() => api.post("/auth/logout-all"));
 
-export const getMe = (): Promise<ApiResult<IUser>> =>
+export const getMe = (): TApiPromise<IUser> =>
   fetchApi(() => api.get("/auth/me"));

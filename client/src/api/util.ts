@@ -1,10 +1,9 @@
 import type { AxiosError } from "axios";
-import type { ApiResponse, ApiResult } from "../types";
+import type { IApiSuccess, TApiPromise } from "../types";
 
-type TFetchApiFn<T> = () => Promise<{ data: ApiResponse<T> }>;
-type TFetchRes<T> = Promise<ApiResult<T>>;
+type TFetchApiFn<T> = () => Promise<{ data: IApiSuccess<T> }>;
 
-export const fetchApi = async <T>(fn: TFetchApiFn<T>): TFetchRes<T> => {
+export const fetchApi = async <T>(fn: TFetchApiFn<T>): TApiPromise<T> => {
   try {
     const { data } = await fn();
     return { ok: true, data: data.data };
