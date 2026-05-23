@@ -1,10 +1,11 @@
+import { useLogin } from "../../hooks/auth/useLogin";
 import {
   FormHeader,
   FormFooter,
   AuthForm,
   FormField,
 } from "../../components/features/auth";
-import { useLogin } from "../../hooks/auth/useLogin";
+import { SiteLogo } from "../../components/shared";
 import "./Auth.scss";
 
 const LoginPage = () => {
@@ -12,8 +13,8 @@ const LoginPage = () => {
 
   return (
     <div className="auth">
-      <div className="auth__page-logo">
-        <img src="../../assets/images/logo.svg" alt="site-logo" />
+      <div className="auth__content">
+        <SiteLogo wrapper="auth__icon-wrapper" />
 
         <FormHeader
           title="Welcome to Note"
