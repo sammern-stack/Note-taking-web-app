@@ -7,12 +7,14 @@ export const sendSuccess = (
   meta?: Record<string, unknown>,
   msg?: string,
 ): void => {
-  res.status(statusCode).json({
-    success: true,
+  const success = {
+    ok: true,
     data,
     ...(meta && { meta }),
     ...(msg && { msg }),
-  });
+  };
+
+  res.status(statusCode).json(success);
 };
 
 export const sendError = (
@@ -20,8 +22,10 @@ export const sendError = (
   message: string,
   statusCode = 500,
 ): void => {
-  res.status(statusCode).json({
-    success: false,
-    message,
-  });
+  const failed = {
+    ok: false,
+    msg: message,
+  };
+
+  res.status(statusCode).json(failed);
 };
