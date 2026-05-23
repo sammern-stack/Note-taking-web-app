@@ -10,8 +10,8 @@ export const errorHandler = (
   // Errors thrown by AppError.ts
   if (error instanceof AppError) {
     res.status(error.statusCode).json({
-      success: false,
-      message: error.message,
+      ok: false,
+      msg: error.message,
     });
     return;
   }
@@ -24,16 +24,16 @@ export const errorHandler = (
     (error as { code: number }).code === 11000
   ) {
     res.status(409).json({
-      success: false,
-      message: "A record with that value already exists",
+      ok: false,
+      msg: "A record with that value already exists",
     });
   }
 
   // Mongoose validation error
   if (error instanceof Error && error.name === "ValidationError") {
     res.status(400).json({
-      success: false,
-      message: error.message,
+      ok: false,
+      msg: error.message,
     });
     return;
   }
@@ -41,8 +41,8 @@ export const errorHandler = (
   // Mongoose bad ObjectId
   if (error instanceof Error && error.name === "CastError") {
     res.status(400).json({
-      success: false,
-      message: "Invalid ID format",
+      ok: false,
+      msg: "Invalid ID format",
     });
     return;
   }
@@ -50,8 +50,8 @@ export const errorHandler = (
   // Unknown errors
   console.log("Unexpected error:", error);
   res.status(500).json({
-    success: false,
-    message:
+    ok: false,
+    msg:
       process.env.NODE_ENV === "production"
         ? "Something when wrong"
         : error instanceof Error
