@@ -3,3 +3,8 @@
   flex-direction: column;
   gap: $gap;
 }
+
+@mixin horizontal-gap($gap) {
+  display: flex;
+  gap: $gap;
+}
