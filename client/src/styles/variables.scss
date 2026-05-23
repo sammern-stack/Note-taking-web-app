@@ -1,0 +1,53 @@
+// Import Fonts
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+// ─── Shared (theme-independent) ───────────────────────────────
+:root {
+  // Base Colors
+  --neutral-0: #ffffff;
+  --neutral-50: #f5f7fa;
+  --neutral-100: #f3f5f8;
+  --neutral-200: #e0e4ea;
+  --neutral-300: #cacfd8;
+  --neutral-400: #99a0ae;
+  --neutral-500: #717784;
+  --neutral-600: #525866;
+  --neutral-700: #2b303b;
+  --neutral-800: #232530;
+  --neutral-900: #191b25;
+  --neutral-950: #0e121b;
+
+  --blue-50: #ebf1ff;
+  --blue-500: #335cff;
+  --blue-700: #2547d0;
+
+  --green-100: #d1fbe9;
+  --green-500: #21c16b;
+
+  --red-100: #ffd5d8;
+  --red-500: #fb3748;
+
+  // Specified Colors
+  --primary-btn-background: var(--blue-500);
+  --error-btn-background: var(--red-500);
+
+  // Fonts
+  --inter-text-1: 700 24px/120% "Inter", sans-serif;
+  --inter-text-2: 700 20px/120% "Inter", sans-serif;
+  --inter-text-3: 600 16px/120% "Inter", sans-serif;
+  --inter-text-4: 500 14px/120% "Inter", sans-serif;
+  --inter-text-5: 400 14px/120% "Inter", sans-serif;
+  --inter-text-6: 400 12px/120% "Inter", sans-serif;
+}
+
+// ─── Light Mode ───────────────────────────────────────────────
+:root[data-theme="light"] {
+  --primary-background: var(--neutral-100);
+  --secondary-background: var(--neutral-0);
+}
+
+// ─── Dark Mode ────────────────────────────────────────────────
+:root[data-theme="dark"] {
+  --primary-background: var(--neutral-700);
+  --secondary-background: var(--neutral-950);
+}
