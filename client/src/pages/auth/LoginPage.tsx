@@ -1,11 +1,11 @@
 import { useLogin } from "../../hooks/auth/useLogin";
 import {
-  FormHeader,
+  // FormHeader,
   FormFooter,
   AuthForm,
   FormField,
 } from "../../components/features/auth";
-import { SiteLogo } from "../../components/shared";
+import { SiteLogo, Title } from "../../components/shared";
 import "./Auth.scss";
 
 const LoginPage = () => {
@@ -16,10 +16,14 @@ const LoginPage = () => {
       <div className="auth__content">
         <SiteLogo wrapper="auth__icon-wrapper" />
 
-        <FormHeader
+        {/* <FormHeader
           title="Welcome to Note"
           subtitle="Please log in to continue"
-        />
+        /> */}
+        <div className="auth__header">
+          <Title size="h1">Welcome to Note</Title>
+          <Title size="h2">Please log in to continue</Title>
+        </div>
 
         <AuthForm
           formik={formik}
