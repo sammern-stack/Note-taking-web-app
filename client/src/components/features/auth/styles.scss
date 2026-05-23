@@ -1,0 +1,12 @@
+@use "../../../styles/mixins.scss" as *;
+
+.form {
+  @include vertical-gap(16px);
+  padding-top: 24px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+}
