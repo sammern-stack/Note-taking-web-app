@@ -1,17 +1,33 @@
-import { Field, ErrorMessage } from "formik";
+import type React from "react";
+import { Field } from "formik";
+import { FormError } from "./FormError";
+import { ShowPassword } from "./ShowPassword";
 import "./styles.scss";
 
 interface FormFieldProps {
+  children: React.ReactNode;
   name: string;
   error: string;
-  type: string;
-  label: string;
+  type: "text" | "email" | "password";
 }
 
-export const FormField = ({ name, error, type, label }: FormFieldProps) => (
+export const FormField = ({ name, error, type, children }: FormFieldProps) => (
   <div className="form__field">
-    <label htmlFor={name}>{label}</label>
-    <Field id={name} name={name} type={type} className="form__input" />
-    <ErrorMessage name={error} component="div" className="form__error" />
+    <label htmlFor={name} className="form__label">
+      {children}
+    </label>
+
+    <div className="form__input-wrapper">
+      <Field
+        id={name}
+        name={name}
+        type={type}
+        placeholder={type === "email" && "email@example.com"}
+        className="form__input"
+      />
+      {type === "password" && <ShowPassword />}
+    </div>
+
+    <FormError name={error} />
   </div>
 );

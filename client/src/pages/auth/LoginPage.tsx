@@ -1,9 +1,6 @@
+import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/auth/useLogin";
-import {
-  FormFooter,
-  AuthForm,
-  FormField,
-} from "../../components/features/auth";
+import { AuthForm, FormField } from "../../components/features/auth";
 import { SiteLogo, Title } from "../../components/shared";
 import "./Auth.scss";
 
@@ -25,22 +22,21 @@ const LoginPage = () => {
           submitLabel="Login"
           submittingLabel="Logging in..."
         >
-          <FormField
-            name="email"
-            error="email"
-            type="email"
-            label="Email address"
-          />
+          <FormField name="email" error="email" type="email">
+            Email address
+          </FormField>
 
-          <FormField
-            name="password"
-            error="password"
-            type="password"
-            label="Password"
-          />
+          <FormField name="password" error="password" type="password">
+            Password
+            <span>Forgot</span>
+          </FormField>
         </AuthForm>
 
-        <FormFooter label="No account yet?" nav="Sign up" link="/signup" />
+        <div className="auth__footer">
+          <Title size="h2">
+            No account yet? <Link to="/signup">Sign up</Link>
+          </Title>
+        </div>
       </div>
     </div>
   );
