@@ -38,16 +38,30 @@
   --inter-text-4: 500 14px/120% "Inter", sans-serif;
   --inter-text-5: 400 14px/120% "Inter", sans-serif;
   --inter-text-6: 400 12px/120% "Inter", sans-serif;
+
+  // Box Shadows
+  --small-shadow: 0 4px 6px 0 rgb(240 240 240 / 0.6);
+  --large-shadow: 0 8px 12px 0 rgb(240 240 240 / 0.6);
 }
 
 // ─── Light Mode ───────────────────────────────────────────────
 :root[data-theme="light"] {
   --primary-background: var(--neutral-100);
   --secondary-background: var(--neutral-0);
+
+  --primary-title-color: var(--neutral-950);
+  --secondary-title-color: var(--neutral-600);
+
+  --border-color: var(--neutral-200);
 }
 
 // ─── Dark Mode ────────────────────────────────────────────────
 :root[data-theme="dark"] {
   --primary-background: var(--neutral-700);
   --secondary-background: var(--neutral-950);
+
+  --primary-title-color: var(--neutral-0);
+  --secondary-title-color: var(--neutral-300);
+
+  --border-color: var(--neutral-800);
 }
