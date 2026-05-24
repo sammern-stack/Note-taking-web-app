@@ -27,7 +27,7 @@ const LoginPage = () => {
 
         <FormField name="password" error="password" type="password">
           Password
-          <span>Forgot</span>
+          <Link to="/forgot-password">Forgot</Link>
         </FormField>
       </AuthForm>
 

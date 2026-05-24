@@ -10,6 +10,8 @@ const HomePage = lazy(() => import("./pages/home/HomePage"));
 const SettingsPage = lazy(() => import("./pages/settings/SettingsPage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const ForgotPswdPage = lazy(() => import("./pages/auth/ForgotPswdPage"));
+const ResetPswdPage = lazy(() => import("./pages/auth/ResetPswdPage"));
 
 export const App = () => {
   const { isAppLoading } = useInitApp();
@@ -21,6 +23,8 @@ export const App = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPswdPage />} />
+          <Route path="/reset-password" element={<ResetPswdPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
