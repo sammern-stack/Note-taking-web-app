@@ -1,7 +1,15 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { useState } from "react";
 
 import EyeIcon from "../../../assets/images/icon-show-password.svg?react";
 import ClosedEyeIcon from "../../../assets/images/icon-hide-password.svg?react";
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 export const ShowPassword = () => {
   const [showPswd, setShowPswd] = useState<"show" | "hide">("hide");

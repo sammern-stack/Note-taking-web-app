@@ -1,8 +1,16 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import type React from "react";
 import { Field } from "formik";
 import { FormError } from "./FormError";
 import { ShowPassword } from "./ShowPassword";
 import "./styles.scss";
+
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
 
 interface FormFieldProps {
   children: React.ReactNode;
@@ -10,6 +18,10 @@ interface FormFieldProps {
   error: string;
   type: "text" | "email" | "password";
 }
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 export const FormField = ({ name, error, type, children }: FormFieldProps) => (
   <div className="form__field">

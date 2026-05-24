@@ -1,7 +1,15 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { Formik, Form, type FormikHelpers } from "formik";
 import { ObjectSchema } from "yup";
 import { Button } from "../../shared";
 import "./styles.scss";
+
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
 
 type FormikWrapperProps<T extends object> = {
   initialValues: T;
@@ -15,6 +23,10 @@ interface FormProps<T extends object> {
   submittingLabel: string;
   children: React.ReactNode;
 }
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 export const AuthForm = <T extends object>({
   formik,
