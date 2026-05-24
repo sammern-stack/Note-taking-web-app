@@ -3,6 +3,7 @@ import { config } from "../config/env.js";
 import type {
   IAccessTokenPayload,
   IRefreshTokenPayload,
+  IResetTokenPayload,
 } from "../types/index.js";
 
 export const generateAccessToken = (payload: IAccessTokenPayload): string => {
@@ -17,12 +18,22 @@ export const generateRefreshToken = (payload: IRefreshTokenPayload): string => {
   } as jwt.SignOptions);
 };
 
+export const generateResetToken = (payload: IResetTokenPayload): string => {
+  return jwt.sign(payload, config.resetTokenSecret, {
+    expiresIn: config.resetTokenExpiry,
+  } as jwt.SignOptions);
+};
+
 export const verifyAccessToken = (token: string): IAccessTokenPayload => {
   return jwt.verify(token, config.accessTokenSecret) as IAccessTokenPayload;
 };
 
 export const verifyRefreshToken = (token: string): IRefreshTokenPayload => {
   return jwt.verify(token, config.refreshTokenSecret) as IRefreshTokenPayload;
+};
+
+export const verifyResetToken = (token: string): IResetTokenPayload => {
+  return jwt.verify(token, config.resetTokenSecret) as IResetTokenPayload;
 };
 
 // Helper: get refresh token expire date

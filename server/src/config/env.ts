@@ -5,8 +5,10 @@ const requireEnvVars = [
   "MONGODB_URI",
   "ACCESS_TOKEN_SECRET",
   "REFRESH_TOKEN_SECRET",
+  "RESET_TOKEN_SECRET",
   "ACCESS_TOKEN_EXPIRY",
   "REFRESH_TOKEN_EXPIRY",
+  "RESET_TOKEN_EXPIRY",
 ] as const;
 
 requireEnvVars.forEach((key) => {
@@ -21,6 +23,8 @@ export const config = {
   mongodbURI: process.env.MONGODB_URI!,
   accessTokenSecret: process.env.ACCESS_TOKEN_SECRET!,
   refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET!,
+  resetTokenSecret: process.env.RESET_TOKEN_SECRET!,
   accessTokenExpiry: process.env.ACCESS_TOKEN_EXPIRY!,
   refreshTokenExpiry: process.env.REFRESH_TOKEN_EXPIRY!,
+  resetTokenExpiry: process.env.RESET_TOKEN_EXPIRY!,
 };

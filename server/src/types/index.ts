@@ -55,6 +55,10 @@ export interface IRefreshTokenPayload {
   userId: string;
 }
 
+export interface IResetTokenPayload {
+  userId: string;
+}
+
 // auth services
 export interface RegisterData {
   username: string;
@@ -65,6 +69,12 @@ export interface RegisterData {
 export interface LoginData {
   email: string;
   password: string;
+}
+
+export interface ResetPw {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface AuthTokens {

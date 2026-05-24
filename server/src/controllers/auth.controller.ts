@@ -8,7 +8,7 @@ import {
   REFRESH_TOKEN_COOKIE,
 } from "../utils/cookie.js";
 import { AppError } from "../utils/AppError.js";
-import type { RegisterBody, LoginBody } from "../types/index.js";
+import type { RegisterBody, LoginBody, ResetPw } from "../types/index.js";
 
 export const register = asyncHandler(
   async (req: Request<{}, {}, RegisterBody>, res: Response) => {
@@ -62,3 +62,18 @@ export const logoutAll = asyncHandler(async (req: Request, res: Response) => {
 export const getMe = asyncHandler(async (req: Request, res: Response) => {
   sendSuccess(res, req.user, 200);
 });
+
+export const forgotPassword = asyncHandler(
+  async (req: Request<{}, {}, { email: string }>, res: Response) => {
+    const token = await authService.forgotPassword(req.body.email);
+    sendSuccess(res, token, 200);
+  },
+);
+
+export const resetPassword = asyncHandler(
+  async (req: Request<{}, {}, ResetPw>, res: Response) => {
+    const { token, newPassword, confirmPassword } = req.body;
+    await authService.resetPassword(token, newPassword, confirmPassword);
+    sendSuccess(res, "Password updated", 200);
+  },
+);

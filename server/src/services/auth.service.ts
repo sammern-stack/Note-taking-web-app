@@ -4,7 +4,9 @@ import { AppError } from "../utils/AppError.js";
 import {
   generateAccessToken,
   generateRefreshToken,
+  generateResetToken,
   verifyRefreshToken,
+  verifyResetToken,
   getRefreshTokenExpiry,
 } from "../utils/jwt.js";
 import type { RegisterData, LoginData, AuthTokens } from "../types/index.js";
@@ -85,10 +87,35 @@ export const refresh = async (incomingRefreshToken: string) => {
   };
 };
 
-export const logout = async (refreshToken: string): Promise<void> => {
+export const logout = async (refreshToken: string) => {
   await RefreshToken.deleteOne({ token: refreshToken });
 };
 
-export const logoutAll = async (userId: string): Promise<void> => {
+export const logoutAll = async (userId: string) => {
   await RefreshToken.deleteMany({ user: userId });
+};
+
+export const forgotPassword = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new AppError("User not found with this email", 404);
+
+  const token = generateResetToken({ userId: user._id.toString() });
+  return token;
+};
+
+export const resetPassword = async (
+  token: string,
+  newPassword: string,
+  confirmPassword: string,
+) => {
+  if (newPassword !== confirmPassword)
+    throw new AppError("Password don't match", 400);
+
+  const payload = verifyResetToken(token);
+  const user = await User.findById(payload.userId);
+  if (!user) throw new AppError("User not found", 404);
+
+  user.password = newPassword;
+  await user.save();
+  return true;
 };

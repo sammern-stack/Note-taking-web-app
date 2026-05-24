@@ -7,6 +7,8 @@ import {
   logout,
   logoutAll,
   getMe,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 import { authenticate } from "../middleware/authenticate.js";
 
@@ -17,6 +19,8 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/refresh", refresh);
 router.post("/logout", logout);
+router.post("/forgot-pw", forgotPassword);
+router.post("/reset-pw", resetPassword);
 
 // Protected routes
 router.post("/logout-all", authenticate, logoutAll);
