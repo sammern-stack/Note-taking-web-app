@@ -33,7 +33,6 @@ const RegisterPage = () => {
 
         <FormField name="password" error="password" type="password">
           Password
-          <span>Forgot</span>
         </FormField>
       </AuthForm>
 
