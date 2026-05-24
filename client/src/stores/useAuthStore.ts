@@ -5,6 +5,8 @@ import {
   loginUser,
   registerUser,
   refreshJWT,
+  forgotUserPswd,
+  resetUserPswd,
   logoutUser,
   logoutAllUser,
 } from "../api/authApi";
@@ -15,15 +17,18 @@ import type {
   AuthResponseData,
   TAsyncVoidFn,
 } from "../types";
-import type { TLogin, TRegister } from "../api/authApi";
+import type { TLogin, TRegister, TReset } from "../api/authApi";
 
 interface AuthState {
   user: IUser | null;
   status: "idle" | "loading" | "authenticated" | "unauthenticated";
+  resetToken: string | null;
 
   // Actions
   login: (info: TLogin) => AuthResult;
   register: (info: TRegister) => AuthResult;
+  forgot: (email: string) => void;
+  reset: (data: TReset) => void;
   logout: TAsyncVoidFn;
   logoutAll: TAsyncVoidFn;
   initializeAuth: TAsyncVoidFn;
@@ -36,6 +41,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   status: "idle",
+  resetToken: null,
 
   // Call it once at app mount
   initializeAuth: async () => {
@@ -63,6 +69,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       get().unauthUser();
     }
   },
+
+  forgot: async (email) => forgotUserPswd(email),
+  reset: async (data) => resetUserPswd(data),
 
   logoutAll: async () => {
     try {

@@ -39,7 +39,7 @@ export const refreshJWT = (): AuthResult =>
   fetchApi(() => api.post("/auth/refresh"));
 
 export const forgotUserPswd = (email: string): ForgotPswd =>
-  fetchApi(() => api.post("/auth/forgot-pw", email));
+  fetchApi(() => api.post("/auth/forgot-pw", { email }));
 
 export const resetUserPswd = (data: TReset): ResetPswd =>
   fetchApi(() => api.post("/auth/reset-pw", data));
