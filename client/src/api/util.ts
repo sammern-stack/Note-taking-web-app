@@ -1,7 +1,20 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import type { AxiosError } from "axios";
 import type { IApiSuccess, TApiPromise } from "../types";
 
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
+
 type TFetchApiFn<T> = () => Promise<{ data: IApiSuccess<T> }>;
+
+//—————————————————————————————————————————————————————————————————
+// Utility function: Fetching data from an api endpoint 
+// and handles errors
+//—————————————————————————————————————————————————————————————————
 
 export const fetchApi = async <T>(fn: TFetchApiFn<T>): TApiPromise<T> => {
   try {

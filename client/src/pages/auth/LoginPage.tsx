@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLogin } from "../../hooks/auth/useLogin";
+import { useLogin } from "../../hooks/auth";
 import { AuthForm, FormField } from "../../components/features/auth";
 import { Button, Title } from "../../components/shared";
 import { AuthWrapper } from "../../components/layout";

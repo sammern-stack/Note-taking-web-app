@@ -1,13 +1,27 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { fetchApi } from "./util";
 import api from "./axios";
 
-import type {
-  NoteResult,
-  NotesResult,
-  TCreateNoteBody,
-  TUpdateNoteBody,
-  VoidResult,
-} from "../types";
+import type { INote, TApiPromise } from "../types";
+
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
+
+type TNewNote = Omit<INote, "_id" | "createdAt" | "updatedAt">;
+type TCreateNoteBody = TNewNote;
+type TUpdateNoteBody = Partial<TNewNote>;
+
+type NoteResult = TApiPromise<INote>;
+type NotesResult = TApiPromise<INote[]>;
+type VoidResult = TApiPromise<void>;
+
+//—————————————————————————————————————————————————————————————————
+// Note Requests
+//—————————————————————————————————————————————————————————————————
 
 export const getNotes = (): NotesResult => fetchApi(() => api.get("/notes"));
 

@@ -1,7 +1,5 @@
 export type TAccessToken = string | null;
 
-export type TQueueFn = (token: string) => void;
-
 export type IApiSuccess<T> = {
   ok: true;
   data: T;

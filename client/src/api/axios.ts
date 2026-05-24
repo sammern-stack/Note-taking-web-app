@@ -1,32 +1,55 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import axios from "axios";
-
 import type { AxiosError, InternalAxiosRequestConfig } from "axios";
-import type {
-  AuthResponseData,
-  IApiSuccess,
-  TAccessToken,
-  TQueueFn,
-} from "../types";
 
-let accessToken: TAccessToken = null;
+import type { IApiSuccess, IUser } from "../types";
 
-export const setAccessToken = (token: TAccessToken): void => {
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
+
+type Token = string | null;
+type TRefreshCall = IApiSuccess<{ user: IUser; accessToken: string }>;
+type TQueueFn = (token: string) => void;
+type AxiosConfig = InternalAxiosRequestConfig & { _retry?: boolean };
+
+//—————————————————————————————————————————————————————————————————
+// Token Storage
+//—————————————————————————————————————————————————————————————————
+
+let accessToken: Token = null;
+
+export const setAccessToken = (token: Token) => {
   accessToken = token;
 };
 
-export const getAccessToken = (): TAccessToken => accessToken;
+export const getAccessToken = (): Token => accessToken;
+
+//—————————————————————————————————————————————————————————————————
+// Refresh Queue
+//—————————————————————————————————————————————————————————————————
+
+// Prevents multiple simultaneous refresh requests when several
+// API calls fail with 401 at the same time
 
 let isRefreshing = false;
 let refreshSubscribers: TQueueFn[] = [];
 
-const onRefresh = (token: string): void => {
-  refreshSubscribers.forEach((callback) => callback(token));
+const onRefresh = (token: string) => {
+  refreshSubscribers.forEach((fn) => fn(token));
   refreshSubscribers = [];
 };
 
-const addRefreshSubscriber = (callback: TQueueFn): void => {
-  refreshSubscribers.push(callback);
+const addRefreshSubscriber = (fn: TQueueFn): void => {
+  refreshSubscribers.push(fn);
 };
+
+//—————————————————————————————————————————————————————————————————
+// Axios Instance
+//—————————————————————————————————————————————————————————————————
 
 const api = axios.create({
   baseURL: "http://localhost:3001/api",
@@ -34,9 +57,13 @@ const api = axios.create({
   withCredentials: true,
 });
 
+//—————————————————————————————————————————————————————————————————
+// Interceptors
+//—————————————————————————————————————————————————————————————————
+
 // Attach access token on every request
 api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  (config: AxiosConfig) => {
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
@@ -47,9 +74,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & {
-      _retry?: boolean;
-    };
+    const originalRequest = error.config as AxiosConfig;
 
     const isRefreshEndpoint = originalRequest.url?.includes("/auth/refresh");
     const is401 = error.response?.status !== 401;
@@ -63,7 +88,7 @@ api.interceptors.response.use(
     // If refreshing any request that comes in goes in a queue
     if (isRefreshing)
       return new Promise((resolve) =>
-        addRefreshSubscriber((token: string) => {
+        addRefreshSubscriber((token) => {
           originalRequest.headers.Authorization = `Bearer ${token}`;
           resolve(api(originalRequest));
         }),
@@ -72,8 +97,7 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { data } =
-        await api.post<IApiSuccess<AuthResponseData>>("/auth/refresh");
+      const { data } = await api.post<TRefreshCall>("/auth/refresh");
 
       const newToken = data.data.accessToken;
       setAccessToken(newToken);
