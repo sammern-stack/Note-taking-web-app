@@ -1,8 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuthStore } from "../../stores/useAuthStore";
-import type { TLogin } from "../../api/authApi";
-import type { FormikHelpers } from "formik";
+import type { TOnSubmit } from "../../types";
 
 export const useLogin = () => {
   const { login } = useAuthStore();
@@ -24,17 +23,10 @@ export const useLogin = () => {
       .required("Password is required"),
   });
 
-  const onSubmit = async (
-    values: TLogin,
-    { setFieldError }: FormikHelpers<TLogin>,
-  ) => {
+  type TValues = typeof initialValues;
+  const onSubmit: TOnSubmit<TValues> = async (values, { setFieldError }) => {
     const res = await login(values);
-
-    if (!res.ok) {
-      setFieldError("password", res.error);
-      return;
-    }
-
+    if (!res.ok) return setFieldError("password", res.error);
     navigate(from, { replace: true });
   };
 
