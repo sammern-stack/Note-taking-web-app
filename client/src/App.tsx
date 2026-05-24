@@ -9,6 +9,7 @@ import { ProtectedRoute, AppLoader } from "./components/shared";
 const HomePage = lazy(() => import("./pages/home/HomePage"));
 const SettingsPage = lazy(() => import("./pages/settings/SettingsPage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
 
 export const App = () => {
   const { isAppLoading } = useInitApp();
@@ -19,6 +20,7 @@ export const App = () => {
       <Suspense fallback={<AppLoader />}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
