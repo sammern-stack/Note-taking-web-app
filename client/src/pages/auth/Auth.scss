@@ -32,4 +32,21 @@
   &__header {
     @include vertical-gap(8px);
   }
+
+  &__google {
+    @include vertical-gap(16px);
+    padding-top: 24px;
+    border-top: 1px solid var(--divider-color);
+  }
+
+  &__divider {
+    border: none;
+    background: var(--divider-color);
+    height: 1px;
+  }
+
+  // Signup link
+  &__link {
+    color: var(--primary-title-color);
+  }
 }

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/auth/useLogin";
 import { AuthForm, FormField } from "../../components/features/auth";
-import { SiteLogo, Title } from "../../components/shared";
+import { Button, SiteLogo, Title } from "../../components/shared";
+import GoogleIcon from "../../assets/images/icon-google.svg?react";
 import "./Auth.scss";
 
 const LoginPage = () => {
@@ -32,9 +33,22 @@ const LoginPage = () => {
           </FormField>
         </AuthForm>
 
+        <div className="auth__google">
+          <Title size="h2">Or log in with:</Title>
+          <Button variant="secondary" onClick={() => alert("Coming soon...")}>
+            <GoogleIcon />
+            <span>Google</span>
+          </Button>
+        </div>
+
+        <hr className="auth__divider" />
+
         <div className="auth__footer">
           <Title size="h2">
-            No account yet? <Link to="/signup">Sign up</Link>
+            No account yet?{" "}
+            <Link to="/signup" className="auth__link">
+              Sign up
+            </Link>
           </Title>
         </div>
       </div>

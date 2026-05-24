@@ -48,6 +48,7 @@
 :root[data-theme="light"] {
   --primary-background: var(--neutral-100);
   --secondary-background: var(--neutral-0);
+  --divider-color: var(--neutral-200);
 
   --primary-title-color: var(--neutral-950);
   --secondary-title-color: var(--neutral-600);
@@ -60,6 +61,7 @@
 :root[data-theme="dark"] {
   --primary-background: var(--neutral-700);
   --secondary-background: var(--neutral-950);
+  --divider-color: var(--neutral-800);
 
   --primary-title-color: var(--neutral-0);
   --secondary-title-color: var(--neutral-300);
