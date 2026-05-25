@@ -8,3 +8,19 @@
   display: flex;
   gap: $gap;
 }
+
+@mixin borderWithBefore($color: #000, $radius: 0) {
+  position: relative;
+
+  &::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid $color;
+    border-radius: $radius;
+    pointer-events: none;
+  }
+}
