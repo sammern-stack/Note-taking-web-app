@@ -23,14 +23,16 @@ export const TagItem = ({ tag }: ITagItem) => {
   const tagFilter = useNotesStore((s) => s.tagFilter);
   const setTagFilter = useNotesStore((s) => s.setTagFilter);
 
+  const isSameTag = tagFilter === tag;
+  const isTagSelected = isSameTag ? "sidebar__tag-item--selected" : "";
+
+  const toggleTag = () => setTagFilter(isSameTag ? "" : tag);
+
   return (
-    <div
-      className={`sidebar__tag-item ${tagFilter === tag ? "sidebar__tag-item--selected" : ""}`}
-      onClick={() => setTagFilter(tagFilter === tag ? "" : tag)}
-    >
+    <div className={`sidebar__tag-item ${isTagSelected}`} onClick={toggleTag}>
       <TagIcon width="20" height="20" />
       <span>{tag}</span>
-      {tagFilter === tag && <ArrowIcon width="15" height="15" />}
+      {isSameTag && <ArrowIcon width="15" height="15" />}
     </div>
   );
 };
