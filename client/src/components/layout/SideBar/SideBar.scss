@@ -1,0 +1,65 @@
+@use "../../../styles/mixins.scss" as *;
+
+.sidebar {
+  font: var(--inter-text-4);
+  color: var(--sidebar-text);
+
+  &__content {
+    flex: 1;
+    @include vertical-gap(8px);
+    min-height: 0;
+  }
+
+  &__top-nav {
+    @include vertical-gap(4px);
+  }
+
+  &__top-nav-item {
+    @include horizontal-gap(8px);
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    & span:nth-child(2) {
+      flex: 1;
+    }
+
+    &:hover {
+      background: var(--sidebar-bg-selected);
+    }
+  }
+
+  &__divider {
+    background: var(--divider-color);
+    height: 1px;
+  }
+
+  &__tags-title {
+    color: var(--sidebar-tags-title);
+    padding: 0 8px;
+  }
+
+  &__tags-list {
+    flex: 1;
+    @include vertical-gap(4px);
+    min-height: 0;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__tag-item {
+    @include horizontal-gap(8px);
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sidebar-bg-selected);
+    }
+  }
+}
