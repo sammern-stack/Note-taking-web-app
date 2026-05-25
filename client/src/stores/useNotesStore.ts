@@ -18,12 +18,15 @@ interface INotesStore {
   notes: INote[];
   tags: string[];
 
-  // Sidebar filters
+  // LocalStorage States
   mainFilter: MainFilter;
   setMainFilter: (filter: MainFilter) => void;
 
   tagFilter: string;
   setTagFilter: (tag: string) => void;
+
+  noteSelected: string;
+  setNoteSelected: (noteId: string) => void;
 
   // Actions
   setNotes: () => Promise<void>;
@@ -54,6 +57,9 @@ export const useNotesStore = create<INotesStore>()(
       tagFilter: "",
       setTagFilter: (tagFilter) => set({ tagFilter }),
 
+      noteSelected: "",
+      setNoteSelected: (noteId) => set({ noteSelected: noteId }),
+
       setNotes: async () => {
         const res = await getNotes();
         if (!res.ok) return console.log("Error: ", res.error);
@@ -69,6 +75,7 @@ export const useNotesStore = create<INotesStore>()(
       partialize: (s) => ({
         mainFilter: s.mainFilter,
         tagFilter: s.tagFilter,
+        noteSelected: s.noteSelected,
       }),
     },
   ),
