@@ -1,4 +1,4 @@
-import { SideBar } from "../../components/layout";
+import { SideBar, NotesList } from "../../components/layout";
 import { useAuthStore, useThemeStore } from "../../stores";
 import "./HomePage.scss";
 
@@ -14,7 +14,10 @@ const HomePage = () => {
         <div className="home__header">Header</div>
 
         <div className="home__body">
-          <div className="home__notes-list">Note List</div>
+          <div className="home__notes-content">
+            <div className="home__add-note">Add new note</div>
+            <NotesList />
+          </div>
           <div className="home__note-editor">
             Editor
             <h1>Home</h1>
