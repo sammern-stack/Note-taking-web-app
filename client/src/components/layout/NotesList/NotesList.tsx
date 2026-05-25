@@ -1,15 +1,53 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { useNotesStore } from "../../../stores";
+import type { INote } from "../../../types";
+
 import { formatDate } from "../../../utils/formatters";
+
+import { Selectable } from "../../shared";
+
 import "./NotesList.scss";
+
+//—————————————————————————————————————————————————————————————————
+// Helpers
+//—————————————————————————————————————————————————————————————————
+
+const shouldDividerShown = (
+  arr: INote[],
+  item: INote,
+  selected: string,
+): boolean => {
+  const index = arr.findIndex((n) => n._id === item._id);
+  const selectedIndex = arr.findIndex((n) => n._id === selected);
+
+  const isLast = index === arr.length - 1;
+  const isSelected = index === selectedIndex;
+  const isAboveSelected = index === selectedIndex - 1;
+
+  return !isLast && !isSelected && !isAboveSelected;
+};
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 export const NotesList = () => {
   const notes = useNotesStore((s) => s.notes);
+  const noteSelected = useNotesStore((s) => s.noteSelected);
+  const setNoteSelected = useNotesStore((s) => s.setNoteSelected);
 
   return (
     <div className="home__notes-list notes">
       {notes.map((note) => (
         <>
-          <div className="notes__note">
+          <Selectable
+            className="notes__note"
+            isSelected={noteSelected === note._id}
+            onSelect={() => setNoteSelected(note._id)}
+          >
             <span className="notes__note-title">{note.title}</span>
 
             <div className="notes__note-tags">
@@ -28,9 +66,11 @@ export const NotesList = () => {
                 {formatDate(note.updatedAt)}
               </div>
             </div>
-          </div>
+          </Selectable>
 
-          <div className="home__notes-divider"></div>
+          {shouldDividerShown(notes, note, noteSelected) && (
+            <div className="home__notes-divider"></div>
+          )}
         </>
       ))}
     </div>

@@ -1,2 +1,38 @@
+@use "../../../styles/mixins.scss" as *;
+
 .notes {
+  &__note {
+    @include vertical-gap(12px);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &--selected {
+      background: var(--item-bg-selected);
+      @include borderWithBefore(#c0d5ff, 6px);
+    }
+  }
+
+  &__note-title {
+    font: var(--inter-text-3);
+    color: var(--primary-title-color);
+  }
+
+  &__note-tags,
+  &__note-dates {
+    @include horizontal-gap(4px);
+    font: var(--inter-text-6);
+    color: var(--primary-title-color);
+  }
+
+  &__note-dates {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__note-tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+  }
 }
