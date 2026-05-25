@@ -26,8 +26,9 @@ export const App = () => {
           <Route path="/forgot-password" element={<ForgotPswdPage />} />
           <Route path="/reset-password" element={<ResetPswdPage />} />
 
+          <Route path="/" element={<HomePage />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<HomePage />} />
+            {/* <Route path="/" element={<HomePage />} /> */}
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Routes>
