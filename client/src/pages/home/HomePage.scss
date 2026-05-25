@@ -52,4 +52,9 @@
       display: none;
     }
   }
+
+  &__notes-divider {
+    min-height: 1px;
+    background: var(--border-color);
+  }
 }
