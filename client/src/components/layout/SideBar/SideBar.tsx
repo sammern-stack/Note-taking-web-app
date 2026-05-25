@@ -1,8 +1,11 @@
+import { useNotesStore } from "../../../stores";
 import { SiteLogo, Title } from "../../shared";
 import TagIcon from "../../../assets/images/icon-tag.svg?react";
 import "./SideBar.scss";
 
 export const SideBar = () => {
+  const tags = useNotesStore((s) => s.tags);
+
   return (
     <div className="home__sidebar sidebar">
       <SiteLogo wrapper="sidebar__site-icon" />
@@ -28,18 +31,12 @@ export const SideBar = () => {
         </Title>
 
         <div className="sidebar__tags-list">
-          <div className="sidebar__tag-item">
-            <TagIcon width="20" height="20" />
-            Tag-1
-          </div>
-          <div className="sidebar__tag-item">
-            <TagIcon width="20" height="20" />
-            Tag-2
-          </div>
-          <div className="sidebar__tag-item">
-            <TagIcon width="20" height="20" />
-            Tag-3
-          </div>
+          {tags.map((tag) => (
+            <div className="sidebar__tag-item">
+              <TagIcon width="20" height="20" />
+              {tag}
+            </div>
+          ))}
         </div>
       </div>
     </div>
