@@ -1,10 +1,24 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { useNotesStore } from "../../../stores";
+
 import { SiteLogo, Title } from "../../shared";
+import { MainNavItem } from "./MainNavItem";
+
 import TagIcon from "../../../assets/images/icon-tag.svg?react";
 import "./SideBar.scss";
 
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
+
 export const SideBar = () => {
   const tags = useNotesStore((s) => s.tags);
+
+  const tagFilter = useNotesStore((s) => s.tagFilter);
+  const setTagFilter = useNotesStore((s) => s.setTagFilter);
 
   return (
     <div className="home__sidebar sidebar">
@@ -12,16 +26,8 @@ export const SideBar = () => {
 
       <div className="sidebar__content">
         <div className="sidebar__top-nav">
-          <div className="sidebar__top-nav-item">
-            <span>I</span>
-            <span>All Notes</span>
-            <span>A</span>
-          </div>
-
-          <div className="sidebar__top-nav-item">
-            <span>I</span>
-            Archived Notes
-          </div>
+          <MainNavItem label="All Notes" filter="All" />
+          <MainNavItem label="Archived Notes" filter="Archived" />
         </div>
 
         <div className="sidebar__divider"></div>
