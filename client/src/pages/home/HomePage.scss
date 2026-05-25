@@ -57,4 +57,16 @@
     min-height: 1px;
     background: var(--border-color);
   }
+
+  &__note-editor {
+    flex: 1;
+    @include vertical-gap(16px);
+    padding: 20px 24px;
+  }
+
+  &__note-actions {
+    width: 258px;
+    padding: 20px 16px;
+    border-left: 1px solid var(--border-color);
+  }
 }

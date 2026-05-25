@@ -19,7 +19,6 @@ const HomePage = () => {
             <NotesList />
           </div>
           <div className="home__note-editor">
-            Editor
             <h1>Home</h1>
             <button onClick={() => logout()}>Log out</button>
             <button onClick={toggleTheme}>Toggle Theme</button>
