@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useAuthStore, useThemeStore } from "../stores";
+import { useAuthStore, useThemeStore, useNotesStore } from "../stores";
 
 export const useInitApp = () => {
-  const { initializeAuth, status } = useAuthStore();
+  const { initializeAuth, status, user } = useAuthStore();
   const theme = useThemeStore((s) => s.theme);
+  const setNotes = useNotesStore((s) => s.setNotes);
 
   // Log in user when page mounts
   useEffect(() => {
@@ -14,6 +15,10 @@ export const useInitApp = () => {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (user) setNotes();
+  }, [user]);
 
   const isAppLoading: boolean = status === "idle" || status === "loading";
 
