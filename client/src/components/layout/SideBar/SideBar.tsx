@@ -6,8 +6,8 @@ import { useNotesStore } from "../../../stores";
 
 import { SiteLogo, Title } from "../../shared";
 import { MainNavItem } from "./MainNavItem";
+import { TagItem } from "./TagItem";
 
-import TagIcon from "../../../assets/images/icon-tag.svg?react";
 import "./SideBar.scss";
 
 //—————————————————————————————————————————————————————————————————
@@ -16,9 +16,6 @@ import "./SideBar.scss";
 
 export const SideBar = () => {
   const tags = useNotesStore((s) => s.tags);
-
-  const tagFilter = useNotesStore((s) => s.tagFilter);
-  const setTagFilter = useNotesStore((s) => s.setTagFilter);
 
   return (
     <div className="home__sidebar sidebar">
@@ -38,10 +35,7 @@ export const SideBar = () => {
 
         <div className="sidebar__tags-list">
           {tags.map((tag) => (
-            <div className="sidebar__tag-item">
-              <TagIcon width="20" height="20" />
-              {tag}
-            </div>
+            <TagItem tag={tag} />
           ))}
         </div>
       </div>
