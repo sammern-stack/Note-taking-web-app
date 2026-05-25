@@ -12,12 +12,20 @@ import type { INote } from "../types";
 // Types
 //—————————————————————————————————————————————————————————————————
 
+type MainFilter = "All" | "Archived";
+
 interface INotesStore {
   notes: INote[];
   tags: string[];
-  mainFilter: "All" | "Archived";
-  tagFilter: string;
 
+  // Sidebar filters
+  mainFilter: MainFilter;
+  setMainFilter: (filter: MainFilter) => void;
+
+  tagFilter: string;
+  setTagFilter: (tag: string) => void;
+
+  // Actions
   setNotes: () => Promise<void>;
 }
 
@@ -41,7 +49,10 @@ export const useNotesStore = create<INotesStore>()(
 
       // Sidebar's filter options
       mainFilter: "All",
+      setMainFilter: (mainFilter) => set({ mainFilter }),
+
       tagFilter: "",
+      setTagFilter: (tagFilter) => set({ tagFilter }),
 
       setNotes: async () => {
         const res = await getNotes();
