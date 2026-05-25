@@ -12,13 +12,13 @@
   }
 
   &:hover {
-    background: var(--sidebar-bg-selected);
+    background: var(--item-bg-selected);
     color: var(--sidebar-text-selected);
   }
 
   &--selected {
     position: relative;
-    background: var(--sidebar-bg-selected);
+    background: var(--item-bg-selected);
     color: var(--sidebar-text-selected);
 
     svg:first-child {
