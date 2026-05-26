@@ -6,7 +6,7 @@ import { useNotesStore } from "../../../stores";
 
 import { formatDate } from "../../../utils/formatters";
 
-import { Title } from "../../shared";
+import { Button, Title } from "../../shared";
 import { NoteEditor } from ".";
 
 import "./styles.scss";
@@ -57,8 +57,8 @@ export const ActiveNote = () => {
       <div className="note__divider"></div>
 
       <div className="note__buttons">
-        <div className="note__save-note">Save</div>
-        <div className="note__cancel-note">Cancel</div>
+        <Button variant="primary" className="note__save-note">Save</Button>
+        <Button variant="cancel" className="note__cancel-note">Cancel</Button>
       </div>
     </div>
   );

@@ -43,4 +43,12 @@
     flex-direction: column;
     min-height: 0;
   }
+
+  &__buttons {
+    @include horizontal-gap(16px);
+
+    > button {
+      width: 100px;
+    }
+  }
 }
