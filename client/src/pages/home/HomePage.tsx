@@ -1,5 +1,5 @@
 import { SideBar, NotesList } from "../../components/layout";
-import { Title } from "../../components/shared";
+import { Button, Title } from "../../components/shared";
 import { useAuthStore, useThemeStore } from "../../stores";
 import "./HomePage.scss";
 
@@ -25,7 +25,7 @@ const HomePage = () => {
 
         <div className="home__body">
           <div className="home__notes-content">
-            <div className="home__add-note">Add new note</div>
+            <Button variant="primary">+ Create New Note</Button>
 
             <NotesList />
           </div>

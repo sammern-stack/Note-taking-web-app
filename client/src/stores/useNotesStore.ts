@@ -5,7 +5,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { getNotes } from "../api/notesApi";
+import { getNoteById, getNotes } from "../api/notesApi";
 import type { INote } from "../types";
 
 //—————————————————————————————————————————————————————————————————
@@ -27,6 +27,10 @@ interface INotesStore {
 
   noteSelected: string;
   setNoteSelected: (noteId: string) => void;
+
+  // Local states
+  activeNote: INote | null;
+  setActiveNote: (id: string) => Promise<void>;
 
   // Actions
   setNotes: () => Promise<void>;
@@ -59,6 +63,13 @@ export const useNotesStore = create<INotesStore>()(
 
       noteSelected: "",
       setNoteSelected: (noteId) => set({ noteSelected: noteId }),
+
+      activeNote: null,
+      setActiveNote: async (id) => {
+        const res = await getNoteById(id);
+        if (!res.ok) return console.log("Error", res.error);
+        set({ activeNote: res.data });
+      },
 
       setNotes: async () => {
         const res = await getNotes();
