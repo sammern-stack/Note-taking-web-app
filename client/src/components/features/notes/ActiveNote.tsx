@@ -1,41 +1,58 @@
-import "./styles.scss";
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
 
 import { useNotesStore } from "../../../stores";
+
 import { formatDate } from "../../../utils/formatters";
+
+import { Title } from "../../shared";
+import { NoteEditor } from ".";
+
+import "./styles.scss";
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 export const ActiveNote = () => {
   const activeNote = useNotesStore((s) => s.activeNote);
 
   if (!activeNote) return <div className="note__empty">No note selected</div>;
 
+  const tags = [...activeNote.tags].join(", ");
+
+  const handleChange = (html: string) => {
+    // debounce this in production — save after user stops typing
+    console.log(html);
+  };
+
   return (
     <div className="home__active-note note">
-      <div className="note__title">{activeNote.title}</div>
+      <Title size="h1">{activeNote.title}</Title>
 
       <div className="note__properties">
-        <div className="note__tags">
+        <Title size="h2" className="note__tags">
           <span>Tags</span>
-          {activeNote.tags.map((t) => (
-            <div>{t}</div>
-          ))}
-        </div>
+          <div className="note__tags-list">{tags}</div>
+        </Title>
 
-        <div className="notes__dates">
+        <Title size="h2" className="note__dates">
           <div className="note__created">
-            <span>Created:</span>
             {formatDate(activeNote.createdAt)}
           </div>
 
           <div className="note__updated">
-            <span>Updated:</span>
-            {formatDate(activeNote.updatedAt)}
+            <span>Last edited</span> {formatDate(activeNote.updatedAt)}
           </div>
-        </div>
+        </Title>
       </div>
 
       <div className="note__divider"></div>
 
-      <div className="note__content">{activeNote.content}</div>
+      <div className="note__content">
+        <NoteEditor content={activeNote.content} onChange={handleChange} />
+      </div>
 
       <div className="note__divider"></div>
 

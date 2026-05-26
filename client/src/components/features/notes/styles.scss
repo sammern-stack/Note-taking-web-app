@@ -1,0 +1,46 @@
+@use "../../../styles/mixins.scss" as *;
+
+.note {
+  &__divider {
+    width: 100%;
+    min-height: 1px;
+    background: var(--divider-color);
+  }
+
+  &__properties {
+    @include vertical-gap(8px);
+  }
+
+  &__tags {
+    @include horizontal-gap(8px);
+    color: var(--tags-color);
+
+    & span {
+      width: 115px;
+    }
+  }
+
+  &__tags-list {
+    flex: 1;
+  }
+
+  &__dates {
+    @include horizontal-gap(8px);
+    color: var(--tags-color);
+  }
+
+  &__created {
+    width: 115px;
+  }
+
+  &__updated {
+    flex: 1;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
