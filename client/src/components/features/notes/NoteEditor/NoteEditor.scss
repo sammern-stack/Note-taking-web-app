@@ -8,6 +8,10 @@
     overflow-y: auto;
     padding: 1rem;
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     // TipTap renders a div.tiptap inside EditorContent
     .tiptap {
       height: 100%;
