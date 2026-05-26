@@ -58,7 +58,7 @@
     background: var(--border-color);
   }
 
-  &__note-editor {
+  &__active-note {
     flex: 1;
     @include vertical-gap(16px);
     padding: 20px 24px;

@@ -1,7 +1,18 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
+import { useAuthStore, useThemeStore } from "../../stores";
+
+import { ActiveNote } from "../../components/features/notes";
 import { SideBar, NotesList } from "../../components/layout";
 import { Button, Title } from "../../components/shared";
-import { useAuthStore, useThemeStore } from "../../stores";
+
 import "./HomePage.scss";
+
+//—————————————————————————————————————————————————————————————————
+// Component
+//—————————————————————————————————————————————————————————————————
 
 const HomePage = () => {
   const logout = useAuthStore((s) => s.logout);
@@ -19,7 +30,11 @@ const HomePage = () => {
 
           <div className="home__header-right">
             <div className="home__search-bar">Search</div>
-            <div className="home__profile">Profile</div>
+            <div className="home__profile">
+              <h1>Home</h1>
+              <button onClick={() => logout()}>Log out</button>
+              <button onClick={toggleTheme}>Toggle Theme</button>
+            </div>
           </div>
         </div>
 
@@ -30,11 +45,8 @@ const HomePage = () => {
             <NotesList />
           </div>
 
-          <div className="home__note-editor">
-            <h1>Home</h1>
-            <button onClick={() => logout()}>Log out</button>
-            <button onClick={toggleTheme}>Toggle Theme</button>
-          </div>
+          <ActiveNote />
+
           <div className="home__note-actions">Actions</div>
         </div>
       </div>
