@@ -1,4 +1,5 @@
 import { SideBar, NotesList } from "../../components/layout";
+import { Title } from "../../components/shared";
 import { useAuthStore, useThemeStore } from "../../stores";
 import "./HomePage.scss";
 
@@ -11,13 +12,24 @@ const HomePage = () => {
       <SideBar />
 
       <div className="home__content">
-        <div className="home__header">Header</div>
+        <div className="home__header">
+          <div className="home__header-left">
+            <Title size="h1">Notes</Title>
+          </div>
+
+          <div className="home__header-right">
+            <div className="home__search-bar">Search</div>
+            <div className="home__profile">Profile</div>
+          </div>
+        </div>
 
         <div className="home__body">
           <div className="home__notes-content">
             <div className="home__add-note">Add new note</div>
+
             <NotesList />
           </div>
+
           <div className="home__note-editor">
             <h1>Home</h1>
             <button onClick={() => logout()}>Log out</button>
