@@ -10,7 +10,7 @@
     color: var(--neutral-0);
 
     &:hover {
-      background: var(--blue-700); 
+      background: var(--blue-700);
     }
   }
 
@@ -24,6 +24,14 @@
     span {
       padding: 0 16px;
       font: var(--inter-text-4);
+    }
+  }
+
+  &--cancel {
+    background: var(--cancel-btn);
+
+    &:hover {
+      background: var(--cancel-btn-hover);
     }
   }
 }
