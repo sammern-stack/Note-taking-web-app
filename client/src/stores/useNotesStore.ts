@@ -33,7 +33,8 @@ interface INotesStore {
   setActiveNote: (id: string) => Promise<void>;
 
   // Actions
-  setNotes: () => Promise<void>;
+  fetchAllNotes: () => Promise<void>;
+  fetchArchivedNotes: () => Promise<void>;
 }
 
 //—————————————————————————————————————————————————————————————————
@@ -43,6 +44,17 @@ interface INotesStore {
 const getUniqueSortedTags = (notes: INote[]): string[] => [
   ...new Set(notes.flatMap((n) => n.tags).sort((a, b) => a.localeCompare(b))),
 ];
+
+const fetchTags = async () => {
+  const res = await getNotes({});
+
+  if (!res.ok) {
+    console.log("Error", res.error);
+    return [];
+  }
+
+  return getUniqueSortedTags(res.data);
+};
 
 //—————————————————————————————————————————————————————————————————
 // Store
@@ -71,12 +83,22 @@ export const useNotesStore = create<INotesStore>()(
         set({ activeNote: res.data });
       },
 
-      setNotes: async () => {
+      fetchAllNotes: async () => {
         const res = await getNotes({});
         if (!res.ok) return console.log("Error: ", res.error);
 
         const notes = res.data;
-        const tags = getUniqueSortedTags(notes);
+        const tags = await fetchTags();
+
+        set({ notes, tags });
+      },
+
+      fetchArchivedNotes: async () => {
+        const res = await getNotes({ isArchived: true });
+        if (!res.ok) return console.log("Error: ", res.error);
+
+        const notes = res.data;
+        const tags = await fetchTags();
 
         set({ notes, tags });
       },

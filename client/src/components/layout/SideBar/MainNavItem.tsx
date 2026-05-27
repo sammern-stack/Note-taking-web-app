@@ -29,13 +29,20 @@ export const MainNavItem = ({ label, filter }: MainNavItemProps) => {
   const mainFilter = useNotesStore((s) => s.mainFilter);
   const setMainFilter = useNotesStore((s) => s.setMainFilter);
 
+  const fetchAllNotes = useNotesStore((s) => s.fetchAllNotes);
+  const fetchArchivedNotes = useNotesStore((s) => s.fetchArchivedNotes);
+
   const NavIcon = {
     All: HomeIcon,
     Archived: ArchivedIcon,
   }[filter];
 
   const isSelected = mainFilter === filter;
-  const handleSelect = () => setMainFilter(filter);
+  const handleSelect = () => {
+    setMainFilter(filter);
+    if (filter === "All") fetchAllNotes();
+    if (filter === "Archived") fetchArchivedNotes();
+  };
 
   return (
     <Selectable

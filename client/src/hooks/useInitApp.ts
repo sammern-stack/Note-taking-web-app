@@ -4,10 +4,14 @@ import { useAuthStore, useThemeStore, useNotesStore } from "../stores";
 export const useInitApp = () => {
   const { initializeAuth, status, user } = useAuthStore();
   const theme = useThemeStore((s) => s.theme);
-  const setNotes = useNotesStore((s) => s.setNotes);
+
+  const fetchAllNotes = useNotesStore((s) => s.fetchAllNotes);
+  const fetchArchivedNotes = useNotesStore((s) => s.fetchArchivedNotes);
 
   const noteSelected = useNotesStore((s) => s.noteSelected);
   const setActiveNote = useNotesStore((s) => s.setActiveNote);
+
+  const mainFilter = useNotesStore((s) => s.mainFilter);
 
   // Log in user when page mounts
   useEffect(() => {
@@ -20,9 +24,21 @@ export const useInitApp = () => {
   }, [theme]);
 
   useEffect(() => {
-    if (user) setNotes(); // Load notes when user logs in
+    const isAll = mainFilter === "All";
+    const isArchived = mainFilter === "Archived";
+
+    if (user && isAll) fetchAllNotes();
+    if (user && isArchived) fetchArchivedNotes();
+
     if (user && noteSelected !== "") setActiveNote(noteSelected);
-  }, [user, noteSelected]);
+  }, [
+    user,
+    noteSelected,
+    setActiveNote,
+    fetchAllNotes,
+    fetchArchivedNotes,
+    mainFilter,
+  ]);
 
   const isAppLoading: boolean = status === "idle" || status === "loading";
 
