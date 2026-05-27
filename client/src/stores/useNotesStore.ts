@@ -72,7 +72,7 @@ export const useNotesStore = create<INotesStore>()(
       },
 
       setNotes: async () => {
-        const res = await getNotes();
+        const res = await getNotes({});
         if (!res.ok) return console.log("Error: ", res.error);
 
         const notes = res.data;
