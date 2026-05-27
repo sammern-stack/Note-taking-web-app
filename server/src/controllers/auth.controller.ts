@@ -1,4 +1,9 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import type { Request, Response } from "express";
+
 import * as authService from "../services/auth.service.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { sendSuccess } from "../utils/apiResponse.js";
@@ -8,7 +13,12 @@ import {
   REFRESH_TOKEN_COOKIE,
 } from "../utils/cookie.js";
 import { AppError } from "../utils/AppError.js";
+
 import type { RegisterBody, LoginBody, ResetPw } from "../types/index.js";
+
+//—————————————————————————————————————————————————————————————————
+// Authentication Services
+//—————————————————————————————————————————————————————————————————
 
 export const register = asyncHandler(
   async (req: Request<{}, {}, RegisterBody>, res: Response) => {
