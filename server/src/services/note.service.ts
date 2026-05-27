@@ -35,7 +35,7 @@ export const getNotes = async (filters: TFilters) => {
   const query: Record<string, unknown> = {};
 
   if (filters.isArchived) query.isArchived = filters.isArchived;
-  if (filters.tag) query.tag = filters.tag;
+  if (filters.tag) query.tags = filters.tag;
 
   return Note.find(query);
 };
