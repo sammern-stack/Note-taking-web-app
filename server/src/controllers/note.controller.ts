@@ -12,13 +12,24 @@ import { AppError } from "../utils/AppError.js";
 import type { TUpdateNoteBody, TCreateNoteBody } from "../types/index.js";
 
 //—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
+
+interface IFiltersBody {
+  isArchived?: boolean;
+  tag?: string;
+}
+
+//—————————————————————————————————————————————————————————————————
 // Note Services
 //—————————————————————————————————————————————————————————————————
 
-export const getNotes = asyncHandler(async (req: Request, res: Response) => {
-  const notes = await noteService.getNotes({});
-  sendSuccess(res, notes, 200);
-});
+export const getNotes = asyncHandler(
+  async (req: Request<{}, {}, IFiltersBody>, res: Response) => {
+    const notes = await noteService.getNotes(req.body);
+    sendSuccess(res, notes, 200);
+  },
+);
 
 export const getNoteById = asyncHandler(
   async (req: Request<{ id?: string }>, res: Response) => {
