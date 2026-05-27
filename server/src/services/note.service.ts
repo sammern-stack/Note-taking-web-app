@@ -1,10 +1,43 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import { Types } from "mongoose";
+
 import Note from "../models/Notes.js";
 import { AppError } from "../utils/AppError.js";
+
 import type { INote, TNewNote } from "../types/index.js";
 
-export const getAllNotes = async () => {
-  return Note.find();
+//—————————————————————————————————————————————————————————————————
+// Types
+//—————————————————————————————————————————————————————————————————
+
+type TFilters = {
+  isArchived?: boolean;
+  tag?: string;
+};
+
+//—————————————————————————————————————————————————————————————————
+// Helpers
+//—————————————————————————————————————————————————————————————————
+
+const validateId = (id: string) => {
+  const isValidId = Types.ObjectId.isValid(id);
+  if (!isValidId) throw new AppError("Invalid note ID", 400);
+};
+
+//—————————————————————————————————————————————————————————————————
+// Services
+//—————————————————————————————————————————————————————————————————
+
+export const getNotes = async (filters: TFilters) => {
+  const query: Record<string, unknown> = {};
+
+  if (filters.isArchived) query.isArchived = filters.isArchived;
+  if (filters.tag) query.tag = filters.tag;
+
+  return Note.find(query);
 };
 
 export const getNoteById = async (id: string) => {
@@ -39,10 +72,4 @@ export const deleteNote = async (id: string) => {
 
   const note = await Note.findByIdAndDelete(id);
   if (!note) throw new AppError("Note not found", 404);
-};
-
-// Utility: validate note id
-const validateId = (id: string) => {
-  const isValidId = Types.ObjectId.isValid(id);
-  if (!isValidId) throw new AppError("Invalid note ID", 400);
 };

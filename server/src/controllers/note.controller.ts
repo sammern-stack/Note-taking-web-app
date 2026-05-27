@@ -1,3 +1,7 @@
+//—————————————————————————————————————————————————————————————————
+// Imports
+//—————————————————————————————————————————————————————————————————
+
 import type { Request, Response } from "express";
 import * as noteService from "../services/note.service.js";
 
@@ -5,21 +9,23 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { sendSuccess } from "../utils/apiResponse.js";
 import { AppError } from "../utils/AppError.js";
 
-import type {
-  INoteParams,
-  TUpdateNoteBody,
-  TCreateNoteBody,
-} from "../types/index.js";
+import type { TUpdateNoteBody, TCreateNoteBody } from "../types/index.js";
+
+//—————————————————————————————————————————————————————————————————
+// Note Services
+//—————————————————————————————————————————————————————————————————
 
 export const getNotes = asyncHandler(async (req: Request, res: Response) => {
-  const notes = await noteService.getAllNotes();
+  const notes = await noteService.getNotes({});
   sendSuccess(res, notes, 200);
 });
 
 export const getNoteById = asyncHandler(
-  async (req: Request<INoteParams>, res: Response) => {
-    if (!req.params.id) throw new AppError("Invalid or missing note ID", 400);
-    const note = await noteService.getNoteById(req.params.id);
+  async (req: Request<{ id?: string }>, res: Response) => {
+    const { id } = req.params;
+    if (!id) throw new AppError("Invalid or missing note ID", 400);
+
+    const note = await noteService.getNoteById(id);
     sendSuccess(res, note, 200);
   },
 );
@@ -32,17 +38,21 @@ export const createNote = asyncHandler(
 );
 
 export const updateNote = asyncHandler(
-  async (req: Request<INoteParams, {}, TUpdateNoteBody>, res: Response) => {
-    if (!req.params.id) throw new AppError("Invalid or missing note ID", 400);
-    const note = await noteService.updateNote(req.params.id, req.body);
+  async (req: Request<{ id?: string }, {}, TUpdateNoteBody>, res: Response) => {
+    const { id } = req.params;
+    if (!id) throw new AppError("Invalid or missing note ID", 400);
+
+    const note = await noteService.updateNote(id, req.body);
     sendSuccess(res, note, 200);
   },
 );
 
 export const deleteNote = asyncHandler(
-  async (req: Request<INoteParams>, res: Response) => {
-    if (!req.params.id) throw new AppError("Invalid or missing note ID", 400);
-    await noteService.deleteNote(req.params.id);
+  async (req: Request<{ id?: string }>, res: Response) => {
+    const { id } = req.params;
+    if (!id) throw new AppError("Invalid or missing note ID", 400);
+
+    await noteService.deleteNote(id);
     sendSuccess(res, {}, 200, {}, "Note deleted");
   },
 );
