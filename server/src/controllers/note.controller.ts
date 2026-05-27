@@ -15,7 +15,7 @@ import type { TUpdateNoteBody, TCreateNoteBody } from "../types/index.js";
 // Types
 //—————————————————————————————————————————————————————————————————
 
-interface IFiltersBody {
+interface IFiltersQuery {
   isArchived?: boolean;
   tag?: string;
 }
@@ -25,8 +25,8 @@ interface IFiltersBody {
 //—————————————————————————————————————————————————————————————————
 
 export const getNotes = asyncHandler(
-  async (req: Request<{}, {}, IFiltersBody>, res: Response) => {
-    const notes = await noteService.getNotes(req.body);
+  async (req: Request<{}, {}, {}, IFiltersQuery>, res: Response) => {
+    const notes = await noteService.getNotes(req.query);
     sendSuccess(res, notes, 200);
   },
 );
