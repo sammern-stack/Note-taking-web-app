@@ -57,8 +57,13 @@ export const ActiveNote = () => {
       <div className="note__divider"></div>
 
       <div className="note__buttons">
-        <Button variant="primary" className="note__save-note">Save</Button>
-        <Button variant="cancel" className="note__cancel-note">Cancel</Button>
+        <Button variant="primary" className="note__save-note">
+          Save
+        </Button>
+
+        <Button variant="cancel" className="note__cancel-note">
+          Cancel
+        </Button>
       </div>
     </div>
   );
