@@ -19,11 +19,17 @@ type NoteResult = TApiPromise<INote>;
 type NotesResult = TApiPromise<INote[]>;
 type VoidResult = TApiPromise<void>;
 
+type TFilters = {
+  isArchived?: boolean;
+  tag?: string;
+};
+
 //—————————————————————————————————————————————————————————————————
 // Note Requests
 //—————————————————————————————————————————————————————————————————
 
-export const getNotes = (): NotesResult => fetchApi(() => api.get("/notes"));
+export const getNotes = (filters: TFilters): NotesResult =>
+  fetchApi(() => api.get("/notes", { params: filters }));
 
 export const getNoteById = (id: string): NoteResult =>
   fetchApi(() => api.get(`/notes/${id}`));
